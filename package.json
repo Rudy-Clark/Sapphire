@@ -10,7 +10,7 @@
     "server:start": "cross-env NODE_ENV=development nodemon --exec babel-node src/app.js",
     "server:build": "rimraf ./build && babel src --out-dir build",
     "server:build:min": "rimraf ./build && babel src --out-dir build --presets minify",
-    "serve": "node build/app.js"
+    "serve": "npm run server:build && node build/app.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
