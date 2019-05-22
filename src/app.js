@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 1337;
 const router = new Router();
 
 router.get('/', async ctx => {
-  ctx.body = "Hello World";
+  ctx.body = 'Hello World';
 });
 
 app.use(router.routes());

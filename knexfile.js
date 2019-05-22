@@ -7,20 +7,20 @@ module.exports = {
     client: 'pg',
     connection: 'postgres://tester:tester@localhost:5432/sapphire_test',
     migrations: {
-      directory: path.join(BASE_PATH, 'migrations')
+      directory: path.join(BASE_PATH, 'migrations'),
     },
     seeds: {
-      directory: path.join(BASE_PATH, 'seeds')
-    }
+      directory: path.join(BASE_PATH, 'seeds'),
+    },
   },
   development: {
     client: 'pg',
     connection: 'postgres://rudy:test@localhost:5432/sapphire',
     migrations: {
-      directory: path.join(BASE_PATH, 'migrations')
+      directory: path.join(BASE_PATH, 'migrations'),
     },
     seeds: {
-      directory: path.join(BASE_PATH, 'seeds')
-    }
-  }
+      directory: path.join(BASE_PATH, 'seeds'),
+    },
+  },
 };
