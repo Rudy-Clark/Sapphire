@@ -1,39 +1,31 @@
-const knex = require('../connection');
+import knex from '../connection';
 
-function getAllPosts() {
+export function getAllPosts() {
   return knex('posts').select('*');
 }
 
-function getSinglePost(id) {
+export function getSinglePost(id) {
   return knex('posts')
     .select('*')
-    .where({ id: parseInt(id)});
+    .where({ id: parseInt(id, 2) });
 }
 
-function setPost(post) {
+export function setPost(post) {
   return knex('posts')
     .insert(post)
     .returning('*');
 }
 
-function updatePost(id, post) {
+export function updatePost(id, post) {
   return knex('posts')
     .update(post)
-    .where({ id: parseInt(id) })
+    .where({ id: parseInt(id, 2) })
     .returning('*');
 }
 
-function removePost(id) {
+export function removePost(id) {
   return knex('posts')
     .del()
-    .where({ id: parseInt(id) })
+    .where({ id: parseInt(id, 2) })
     .returning('*');
 }
-
-module.exports = {
-  getAllPosts,
-  getSinglePost,
-  setPost,
-  updatePost,
-  removePost
-};
