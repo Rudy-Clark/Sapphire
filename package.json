@@ -5,8 +5,10 @@
   "author": "Rudy Clark <rudy.uzb@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon -exec babel-node src/app.js",
-    "build": "babel src --out-dir build",
+    "start": "concurrently \"npm run client:start\" \"npm run server:start\"",
+    "client:start": "cd client && npm run start",
+    "server:start": "nodemon -exec babel-node src/app.js",
+    "server:build": "babel src --out-dir build",
     "serve": "node build/app.js"
   },
   "devDependencies": {
@@ -26,9 +28,9 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
     "nodemon": "^1.19.0",
-    "prettier": "^1.17.1",
-    "webpack": "^4.32.1",
-    "webpack-cli": "^3.3.2",
-    "webpack-node-externals": "^1.7.2"
+    "prettier": "^1.17.1"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.0"
   }
 }
