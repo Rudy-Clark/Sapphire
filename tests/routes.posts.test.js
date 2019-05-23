@@ -7,16 +7,14 @@ import knex from '../src/db/connection';
 afterAll(done => server.close(done));
 
 describe('routes : posts', () => {
-  beforeEach(async () => {
-    await knex.migrate
+  beforeEach(async () =>
+    knex.migrate
       .rollback()
       .then(() => knex.migrate.latest())
-      .then(() => knex.seed.run());
-  });
+      .then(() => knex.seed.run()),
+  );
 
-  afterEach(async () => {
-    await knex.migrate.rollback();
-  });
+  afterEach(async () => knex.migrate.rollback());
 
   test('should return posts', async () => {
     const res = await request(server).get('/api/posts');
