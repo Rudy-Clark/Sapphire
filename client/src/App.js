@@ -11,7 +11,7 @@ function App() {
       setPosts(data.posts);
     }
     fetchPosts();
-  }, [posts]);
+  }, []);
   return (
     <div className="App">
       <ul>
