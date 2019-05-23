@@ -11,7 +11,7 @@
     "server:build": "rimraf ./build && babel src --out-dir build",
     "server:build:min": "rimraf ./build && babel src --out-dir build --presets minify",
     "serve": "npm run server:build && node build/app.js",
-    "server:test": "cross-env NODE_ENV=test jest"
+    "server:test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
