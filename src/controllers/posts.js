@@ -1,12 +1,12 @@
 import Router from 'koa-router';
-import * as queries from '../db/queries/posts';
+import Posts from '../models/Posts';
 
 const router = new Router();
 const BASE_URL = '/api/posts';
 
 router.get(BASE_URL, async ctx => {
   try {
-    const posts = await queries.getAllPosts();
+    const posts = await Posts.query();
     ctx.body = { status: 'success', posts };
   } catch (error) {
     ctx.status = 500;

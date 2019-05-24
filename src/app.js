@@ -3,8 +3,8 @@ import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
 import serve from 'koa-static';
 
-import apiPosts from './routes/posts';
-import apiPages from './routes/pages';
+import apiPosts from './controllers/posts';
+import apiPages from './controllers/pages';
 
 const app = new Koa();
 const PORT = process.env.PORT || 1337;

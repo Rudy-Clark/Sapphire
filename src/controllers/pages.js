@@ -1,12 +1,14 @@
 import Router from 'koa-router';
-import * as queries from '../db/queries/pages';
+import Pages from '../models/Pages';
 
 const router = new Router();
 
 router.get('/api/pages/:name', async ctx => {
   try {
     const { name } = ctx.params;
-    const [page] = await queries.getPageFromName(name);
+    const [page] = await Pages.query()
+      .select('title', 'subtitle', 'wallpaper')
+      .where('name', name);
     ctx.status = 200;
     ctx.body = { status: 'success', page };
   } catch (error) {
