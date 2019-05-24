@@ -42,4 +42,25 @@ describe('routes : posts', () => {
         });
     });
   });
+
+  describe('GET /api/pages/:id', () => {
+    it('should return one post', done => {
+      request(server)
+        .get('/api/posts/2')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.eql(200);
+          expect(res.body.status).to.eql('success');
+          expect(res.body.post).include.keys(
+            'id',
+            'title',
+            'content',
+            'author_id',
+            'created_at',
+            'updated_at',
+          );
+          done();
+        });
+    });
+  });
 });

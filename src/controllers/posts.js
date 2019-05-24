@@ -14,4 +14,15 @@ router.get(BASE_URL, async ctx => {
   }
 });
 
+router.get(`${BASE_URL}/:id`, async ctx => {
+  try {
+    const { id } = ctx.params;
+    const post = await Posts.query().findById(id);
+    ctx.body = { status: 'success', post };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { status: 'error', msg: error };
+  }
+});
+
 export default router;
