@@ -4,20 +4,10 @@ import axios from 'axios';
 import themeProvider from './themeProvider';
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const { data } = await axios.get('/api/posts');
-      setPosts(data.posts);
-    }
-    fetchPosts();
-  }, []);
   return (
     <div className="App">
       <ul>
-        {posts.map(post => (
-          <li key={post.id}>{post.title}</li>
-        ))}
+        <h1>Hello world</h1>
       </ul>
     </div>
   );
