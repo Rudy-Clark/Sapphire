@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import './App.css';
+import themeProvider from './themeProvider';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -23,4 +23,4 @@ function App() {
   );
 }
 
-export default App;
+export default themeProvider(App);
