@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
+import reducers from './reducers';
 import themeProvider from './themeProvider';
+
+const store = createStore(reducers);
 
 function App() {
   return (
-    <div className="App">
-      <ul>
-        <h1>Hello world</h1>
+    <Provider store={store}>
+      <div className="App">
+        <ul>
+          <h1>Hello world</h1>
       </ul>
-    </div>
+      </div>
+    </Provider>
   );
 }
 
