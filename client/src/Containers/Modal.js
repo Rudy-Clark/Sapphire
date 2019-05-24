@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import SignUp from '../Components/Form/SignUp';
 import SignIn from '../Components/Form/SignIn';
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     outline: 'none',
     top: centered,
     left: centered,
-    transform: `translate(-${centered}, -${centered})`
+    transform: `translate(-${centered}, -${centered})`,
   },
 }));
 
@@ -37,15 +38,23 @@ function FormModal({ modal, closeAll }) {
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
+FormModal.propTypes = {
+  modal: PropTypes.object.isRequired,
+  closeAll: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => ({
-  modal: state.modal
+  modal: state.modal,
 });
 
 const mapDispatchToProps = dispatch => ({
-  closeAll: () => dispatch({ type: CLOSE_ALL })
+  closeAll: () => dispatch({ type: CLOSE_ALL }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FormModal);
