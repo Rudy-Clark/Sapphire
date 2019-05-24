@@ -9,7 +9,7 @@ function addUser(user) {
     .insert({
       username: user.username,
       email: user.email,
-      password: hash
+      password: hash,
     })
     .returning('*')
     .catch(err => console.error(err));
@@ -18,22 +18,22 @@ function addUser(user) {
 function getSingleUser(id) {
   return knex('users')
     .select('*')
-    .where({ id: parseInt(id) })
+    .where({ id: parseInt(id, 10) });
 }
 
 function getAllPostsUser(id) {
-  return knex('users').join('posts', 'posts.author_id', 'users.id')
+  return knex('users')
+    .join('posts', 'posts.author_id', 'users.id')
     .select(
       knex.raw(
-        `posts.id, posts.title, posts.created_at, CONCAT(SUBSTRING(posts.content, 1, 150), '...') as cut_content`
-      )
+        `posts.id, posts.title, posts.created_at, CONCAT(SUBSTRING(posts.content, 1, 150), '...') as cut_content`,
+      ),
     )
-    .where({ 'users.id': parseInt(id) })
-    // .toSQL();
+    .where({ 'users.id': parseInt(id, 10) });
 }
 
 module.exports = {
   addUser,
   getSingleUser,
-  getAllPostsUser
+  getAllPostsUser,
 };
