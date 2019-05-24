@@ -4,6 +4,7 @@ import logger from 'koa-logger';
 import serve from 'koa-static';
 
 import apiPosts from './routes/posts';
+import apiPages from './routes/pages';
 
 const app = new Koa();
 const PORT = process.env.PORT || 1337;
@@ -11,7 +12,10 @@ const PORT = process.env.PORT || 1337;
 app.use(logger());
 app.use(serve('./client/build'));
 app.use(bodyParser());
+
+// Routes
 app.use(apiPosts.routes());
+app.use(apiPages.routes());
 
 export const server = app.listen(PORT, () => {
   console.log(`App listen on http://localhost:${PORT}`);

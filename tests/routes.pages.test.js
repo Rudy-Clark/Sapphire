@@ -21,23 +21,15 @@ describe('routes : posts', () => {
 
   afterEach(async () => knex.migrate.rollback());
 
-  describe('GET /api/posts', () => {
-    it('should return all posts', done => {
+  describe('GET /api/pages/:name', () => {
+    it('should return home page', done => {
       request(server)
-        .get('/api/posts')
+        .get('/api/pages/home')
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res.status).to.eql(200);
-          expect(res.body.posts.length).to.not.eql(0);
-          expect(res.body.posts[0]).include.keys(
-            'id',
-            'title',
-            'content',
-            'author_id',
-            'created_at',
-            'updated_at',
-          );
+          expect(res.body.page).have.all.keys('title', 'subtitle', 'wallpaper');
           done();
         });
     });
