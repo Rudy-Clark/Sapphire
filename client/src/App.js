@@ -4,6 +4,8 @@ import { createStore } from 'redux';
 
 import reducers from './reducers';
 import themeProvider from './themeProvider';
+import Modal from './Containers/Modal';
+import Buttons from './Containers/Buttons';
 
 const store = createStore(reducers);
 
@@ -11,9 +13,8 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <ul>
-          <h1>Hello world</h1>
-      </ul>
+        <Buttons />
+        <Modal />
       </div>
     </Provider>
   );

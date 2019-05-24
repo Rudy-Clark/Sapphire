@@ -1,41 +1,51 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 
 import SignUp from '../Components/Form/SignUp';
 import SignIn from '../Components/Form/SignIn';
+import { CLOSE_ALL } from '../actions/modal';
 
+const centered = '50%';
 const useStyles = makeStyles(theme => ({
-
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(4),
+    outline: 'none',
+    top: centered,
+    left: centered,
+    transform: `translate(-${centered}, -${centered})`
+  },
 }));
 
-function FormModal() {
+function FormModal({ modal, closeAll }) {
   const classes = useStyles();
-  const modal = useSelector(state => state.modal);
-  const dispatch = useDispatch();
-  if ('signUp' in modal) {
-    return (
-      <Modal
-        className={classes.root}
-        open={modal.signUp}
-        onClose={() => dispatch()}
-      >
-        <SignUp />
+  return (
+    <div>
+      <Modal open={modal.signIn} onClose={() => closeAll()}>
+        <div className={classes.paper}>
+          <SignIn />
+        </div>
       </Modal>
-    );
-  } else if ('signIn' in modal) {
-    return (
-      <Modal
-        className={classes.root}
-        open={modal.signIn}
-        onClose={() => dispatch()}
-      >
-        <SignIn />
+      <Modal open={modal.signUp} onClose={() => closeAll()}>
+        <div className={classes.paper}>
+          <SignUp />
+        </div>
       </Modal>
-    );
-  } else return null;
+    </div>
+  )
 }
 
-export default FormModal;
+const mapStateToProps = state => ({
+  modal: state.modal
+});
+
+const mapDispatchToProps = dispatch => ({
+  closeAll: () => dispatch({ type: CLOSE_ALL })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormModal);
