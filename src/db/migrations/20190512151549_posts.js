@@ -1,6 +1,6 @@
 exports.up = knex =>
   knex.schema.createTable('posts', table => {
-    table.increments();
+    table.increments().primary();
     table
       .integer('author_id')
       .unsigned()

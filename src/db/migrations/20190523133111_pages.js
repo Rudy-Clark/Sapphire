@@ -1,6 +1,6 @@
 exports.up = knex =>
   knex.schema.createTable('pages', table => {
-    table.increments();
+    table.increments().primary();
     table.string('name').notNullable();
     table.string('title').notNullable();
     table.string('subtitle');
