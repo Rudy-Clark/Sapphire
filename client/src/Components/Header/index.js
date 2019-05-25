@@ -7,9 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 import Diamond from './diamond.svg';
-import FormButtons from '../../Containers/Buttons';
+// import FormButtons from '../../Containers/Buttons';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -43,7 +44,13 @@ function Header() {
           >
             Sapphire
           </Typography>
-          <FormButtons />
+          <Link to="/signIn">
+            <Button>Login</Button>
+          </Link>
+          <Link to="/signUp">
+            <Button>Register</Button>
+          </Link>
+          {/* <FormButtons /> */}
         </Toolbar>
       </Container>
     </AppBar>

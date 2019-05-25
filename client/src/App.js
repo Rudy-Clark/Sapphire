@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 import reducers from './reducers';
 import themeProvider from './themeProvider';
-import Modal from './Containers/Modal';
 import Header from './Components/Header';
 import Pages from './Components/Pages';
 
@@ -18,7 +17,6 @@ function App() {
         <Header />
         <Pages />
       </BrowserRouter>
-      <Modal />
     </Provider>
   );
 }

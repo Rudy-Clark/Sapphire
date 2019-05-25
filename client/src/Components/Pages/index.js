@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Home from './home';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -17,6 +19,8 @@ function Pages() {
     <Container className={classes.container} maxWidth="lg">
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/signUp" component={SignUp} />
+        <Route path="/signIn" component={SignIn} />
       </Switch>
     </Container>
   );
