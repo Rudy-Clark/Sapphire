@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { TOGGLE_SIGN_IN, TOGGLE_SIGN_UP } from '../actions/modal';
 
+const useStyle = makeStyles(() => ({
+  button: {
+    margin: 2,
+    color: '#fff',
+  },
+}));
+
 function ActionButtons({ handleClick }) {
+  const classes = useStyle();
   return (
-    <div>
-      <Button variant="contained" onClick={() => handleClick(TOGGLE_SIGN_IN)}>
+    <Fragment>
+      <Button
+        className={classes.button}
+        onClick={() => handleClick(TOGGLE_SIGN_IN)}
+      >
         Login
       </Button>
-      <Button variant="contained" onClick={() => handleClick(TOGGLE_SIGN_UP)}>
+      <Button
+        className={classes.button}
+        onClick={() => handleClick(TOGGLE_SIGN_UP)}
+      >
         Register
       </Button>
-    </div>
+    </Fragment>
   );
 }
 ActionButtons.propTypes = {
