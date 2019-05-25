@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/deepPurple';
+import Container from '@material-ui/core/Container';
+import { Link } from 'react-router-dom';
 
 import Diamond from './diamond.svg';
 import FormButtons from '../../Containers/Buttons';
@@ -26,20 +28,24 @@ function Header() {
   const classes = useStyles();
   return (
     <AppBar position="relative" className={classes.appBar}>
-      <Toolbar>
-        <img className={classes.logo} alt="Diamond" src={Diamond} />
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.mainTitle}
-        >
-          Sapphire
-        </Typography>
-        <FormButtons />
-      </Toolbar>
+      <Container maxWidth="lg">
+        <Toolbar>
+          <Link to="/">
+            <img className={classes.logo} alt="Diamond" src={Diamond} />
+          </Link>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            className={classes.mainTitle}
+          >
+            Sapphire
+          </Typography>
+          <FormButtons />
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 }
