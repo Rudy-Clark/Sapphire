@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { Route, Switch } from 'react-router';
 
 import Home from './home';
 import SignUp from './SignUp';

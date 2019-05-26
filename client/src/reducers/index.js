@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 
-import modal from './modal';
-
-const rootReducer = combineReducers({ modal });
-
-export default rootReducer;
+export default history =>
+  combineReducers({
+    router: connectRouter(history),
+  });

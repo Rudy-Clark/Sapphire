@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import deepPurple from '@material-ui/core/colors/deepPurple';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -20,15 +19,12 @@ const useStyles = makeStyles(() => ({
   mainTitle: {
     flexGrow: 1,
   },
-  appBar: {
-    backgroundColor: deepPurple[500],
-  },
 }));
 
 function Header() {
   const classes = useStyles();
   return (
-    <AppBar position="relative" className={classes.appBar}>
+    <AppBar position="relative">
       <Container maxWidth="lg">
         <Toolbar>
           <Link to="/">

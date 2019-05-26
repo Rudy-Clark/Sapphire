@@ -1,22 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { BrowserRouter } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
 
-import reducers from './reducers';
+import configureStore, { history } from './configureStore';
 import themeProvider from './themeProvider';
 import Header from './Components/Header';
 import Pages from './Components/Pages';
-
-const store = createStore(reducers);
+const store = configureStore();
 
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <Header />
         <Pages />
-      </BrowserRouter>
+      </ConnectedRouter>
     </Provider>
   );
 }
