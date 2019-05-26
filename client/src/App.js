@@ -6,6 +6,8 @@ import configureStore, { history } from './configureStore';
 import themeProvider from './themeProvider';
 import Header from './Components/Header';
 import Pages from './Components/Pages';
+import Preloader from './Containers/Preloader';
+
 const store = configureStore();
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
       <ConnectedRouter history={history}>
         <Header />
         <Pages />
+        <Preloader />
       </ConnectedRouter>
     </Provider>
   );

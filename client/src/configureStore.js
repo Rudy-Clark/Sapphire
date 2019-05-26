@@ -6,8 +6,9 @@ import createRootReducer from './reducers';
 export const history = createBrowserHistory();
 
 export default preloadState => {
-  // eslint-disable-next-line no-underscore-dangle
-  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancer =
+    // eslint-disable-next-line no-underscore-dangle
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(
     createRootReducer(history),
     preloadState,

@@ -19,6 +19,13 @@ const useStyles = makeStyles(() => ({
   mainTitle: {
     flexGrow: 1,
   },
+  link: {
+    color: '#fff',
+    textDecoration: 'none',
+  },
+  button: {
+    color: 'inherit',
+  },
 }));
 
 function Header() {
@@ -40,13 +47,12 @@ function Header() {
           >
             Sapphire
           </Typography>
-          <Link to="/signIn">
-            <Button>Login</Button>
+          <Link className={classes.link} to="/signIn">
+            <Button className={classes.button}>Login</Button>
           </Link>
-          <Link to="/signUp">
-            <Button>Register</Button>
+          <Link className={classes.link} to="/signUp">
+            <Button className={classes.button}>Register</Button>
           </Link>
-          {/* <FormButtons /> */}
         </Toolbar>
       </Container>
     </AppBar>
