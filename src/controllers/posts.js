@@ -1,10 +1,9 @@
 import Router from 'koa-router';
 import Posts from '../models/Posts';
 
-const router = new Router();
-const BASE_URL = '/api/posts';
+const router = new Router({ prefix: '/api/posts' });
 
-router.get(BASE_URL, async ctx => {
+router.get('/', async ctx => {
   try {
     const posts = await Posts.query();
     ctx.body = { status: 'success', posts };
@@ -14,7 +13,7 @@ router.get(BASE_URL, async ctx => {
   }
 });
 
-router.get(`${BASE_URL}/:id`, async ctx => {
+router.get('/:id', async ctx => {
   try {
     const { id } = ctx.params;
     const post = await Posts.query().findById(id);
