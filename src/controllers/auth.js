@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import Users from '../models/Users';
 import { secretJwt } from '../passport';
+import { parseError } from './helpers';
 
 const router = new Router({ prefix: '/auth' });
 
@@ -57,10 +58,12 @@ router.post('/reg', async ctx => {
       token: `JWT ${token}`,
     };
   } catch (err) {
-    ctx.status = 500;
+    const errors = parseError(err);
+    console.log(errors);
+    ctx.status = 422;
     ctx.body = {
       status: 'error',
-      msg: err,
+      errorMsg: errors,
     };
   }
 });
