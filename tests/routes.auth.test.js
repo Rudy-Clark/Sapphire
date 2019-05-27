@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import { server } from '../src/app';
 import knex from '../src/db/connection';
 
-describe('routes : pages', () => {
+describe('routes : users', () => {
   before(() => server.listen(1337));
   after(() => server.close());
 
@@ -21,15 +21,20 @@ describe('routes : pages', () => {
 
   afterEach(async () => knex.migrate.rollback());
 
-  describe('GET /api/pages/:name', () => {
-    it('should return home page', done => {
+  describe('POST /auth/login', () => {
+    it('should authenticate user', done => {
       request(server)
-        .get('/api/pages/home')
-        .set('Accept', 'application/json')
+        .post('/auth/login')
+        .send({
+          email: 'rudy@rudy.ru',
+          password: '123',
+        })
         .end((err, res) => {
+          console.log(res);
           expect(err).to.be.null;
-          expect(res.status).to.eql(200);
-          expect(res.body.page).have.all.keys('title', 'subtitle', 'wallpaper');
+          expect(res.status).to.be.eql(200);
+          expect(res.body.status).to.be.eql('success');
+          expect(res.body).to.have.all.keys(['name', 'token', 'status']);
           done();
         });
     });
