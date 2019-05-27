@@ -59,7 +59,6 @@ router.post('/reg', async ctx => {
     };
   } catch (err) {
     const errors = parseError(err);
-    console.log(errors);
     ctx.status = 422;
     ctx.body = {
       status: 'error',

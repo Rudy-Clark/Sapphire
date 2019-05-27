@@ -112,4 +112,24 @@ describe('routes : users', () => {
         });
     });
   });
+
+  describe('POST /auth/reg', () => {
+    it('should return invalid password message', done => {
+      const newUser = {};
+      request(server)
+        .post('/auth/reg')
+        .send(newUser)
+        .end((err, res) => {
+          expect(res.status).to.be.eql(422);
+          expect(res.headers['content-type']).include('application/json');
+          expect(res.body.status).to.be.eql('error');
+          expect(res.body.errorMsg).to.have.all.keys([
+            'password',
+            'email',
+            'username',
+          ]);
+          done();
+        });
+    });
+  });
 });
