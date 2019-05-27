@@ -8,7 +8,7 @@ import path from 'path';
 import apiPosts from './controllers/posts';
 import apiPages from './controllers/pages';
 import apiAuth from './controllers/auth';
-import passport from './auth';
+import passport from './passport';
 
 const app = new Koa();
 const PORT = process.env.PORT || 1337;

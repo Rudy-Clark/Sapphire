@@ -3,7 +3,7 @@ import passport from 'koa-passport';
 import jwt from 'jsonwebtoken';
 
 // import Users from '../models/Users';
-import { secretJwt } from '../auth';
+import { secretJwt } from '../passport';
 
 const router = new Router({ prefix: '/auth' });
 
