@@ -17,7 +17,16 @@ router.get('/:id', async ctx => {
   try {
     const { id } = ctx.params;
     const post = await Posts.query().findById(id);
-    ctx.body = { status: 'success', post };
+    if (!post) {
+      ctx.status = 400;
+      ctx.body = {
+        status: 'error',
+        msg: `Can't find this post`,
+      };
+    } else {
+      ctx.status = 200;
+      ctx.body = { status: 'success', post };
+    }
   } catch (error) {
     ctx.status = 500;
     ctx.body = { status: 'error', msg: error };

@@ -13,7 +13,7 @@ router.post('/login', async (ctx, next) => {
       ctx.status = 403;
       ctx.body = {
         status: 'error',
-        msg: 'Unauthorized',
+        msg: 'Invalid password or email',
       };
     } else {
       const payload = {
