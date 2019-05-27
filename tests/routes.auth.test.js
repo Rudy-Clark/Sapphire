@@ -62,4 +62,32 @@ describe('routes : users', () => {
         });
     });
   });
+
+  describe('POST /auth/reg', () => {
+    it('should create new user and return', done => {
+      const newUser = {
+        username: 'johny',
+        email: 'johny@test.ru',
+        password: '123',
+      };
+      request(server)
+        .post('/auth/reg')
+        .send(newUser)
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.status).to.be.eql(201);
+          expect(res.headers['content-type']).include('application/json');
+          expect(res.body.status).to.be.eql('success');
+          expect(res.body.token).to.be.a('string');
+          expect(res.body.user).to.have.all.keys([
+            'id',
+            'name',
+            'email',
+            'password',
+            'role',
+          ]);
+          done();
+        });
+    });
+  });
 });
