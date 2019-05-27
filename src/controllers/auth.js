@@ -10,7 +10,7 @@ const router = new Router({ prefix: '/auth' });
 router.post('/login', async (ctx, next) => {
   await passport.authenticate('local', (err, user) => {
     if (!user) {
-      ctx.status = 403;
+      ctx.status = 401;
       ctx.body = {
         status: 'error',
         msg: 'Invalid password or email',

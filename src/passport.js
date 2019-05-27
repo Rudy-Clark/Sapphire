@@ -24,9 +24,9 @@ passport.use(
       if (!user) {
         done(null, false);
       } else if (!comparePass(password, user.password)) {
-        done(null, false);
+        return done(null, false);
       }
-      done(null, user);
+      return done(null, user);
     } catch (error) {
       done(error);
     }
@@ -42,9 +42,8 @@ passport.use(
   new Strategy(jwtOptions, async (payload, done) => {
     try {
       const user = await User.query().findById(payload.id);
-      if (user) done(null, user);
-      else done(null, false);
-      done(null, user);
+      if (!user) done(null, user);
+      else done(null, user);
     } catch (error) {
       done(error);
     }
