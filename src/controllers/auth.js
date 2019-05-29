@@ -50,7 +50,7 @@ router.post('/reg', async ctx => {
       role: newUser.admin ? 'admin' : 'user',
     };
 
-    const token = jwt.sign(payload, secretJwt);
+    const token = jwt.sign({ ...payload, password: null }, secretJwt);
 
     ctx.status = 201;
     ctx.body = {
@@ -65,6 +65,32 @@ router.post('/reg', async ctx => {
     ctx.body = {
       status: 'error',
       errorMsg: errors,
+    };
+  }
+});
+
+router.get('/status', async ctx => {
+  try {
+    await passport.authenticate('jwt', (err, user) => {
+      if (user) {
+        ctx.status = 200;
+        ctx.body = {
+          status: 'success',
+          msg: 'Authenticated',
+        };
+      } else {
+        ctx.status = 401;
+        ctx.body = {
+          status: 'error',
+          msg: 'Unauthorized',
+        };
+      }
+    });
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = {
+      status: 'error',
+      msg: error,
     };
   }
 });

@@ -4,13 +4,11 @@ import '@babel/polyfill';
 
 import request from 'supertest';
 import { expect } from 'chai';
-// import sinon from 'sinon';
 
 import { server } from '../src/app';
 import knex from '../src/db/connection';
-// import passport from '../src/passport';
 
-describe('routes : users', () => {
+describe('routes : auth', () => {
   before(() => server.listen(1337));
   after(() => server.close());
 
@@ -152,5 +150,4 @@ describe('routes : users', () => {
         });
     });
   });
-  
 });

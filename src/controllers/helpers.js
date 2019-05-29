@@ -1,6 +1,5 @@
 export function parseError(err) {
   const res = {};
-  console.log(err);
   const { data } = err;
   Object.keys(data).forEach(field => {
     // eslint-disable-next-line no-plusplus

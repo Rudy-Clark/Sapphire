@@ -18,6 +18,7 @@ const options = {
 };
 
 passport.use(
+  // eslint-disable-next-line consistent-return
   new LocalStrategy(options, async (email, password, done) => {
     try {
       const user = await User.query().findOne({ email });
