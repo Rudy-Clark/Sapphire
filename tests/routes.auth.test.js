@@ -66,8 +66,8 @@ describe('routes : users', () => {
   describe('POST /auth/reg', () => {
     it('should create new user and return', done => {
       const newUser = {
-        username: 'johny',
-        email: 'johny@test.ru',
+        username: 'clark',
+        email: 'clark@test.ru',
         password: '123',
       };
       request(server)
@@ -114,7 +114,7 @@ describe('routes : users', () => {
   });
 
   describe('POST /auth/reg', () => {
-    it('should return invalid password message', done => {
+    it('throw error when send empty fields', done => {
       const newUser = {};
       request(server)
         .post('/auth/reg')
@@ -128,6 +128,26 @@ describe('routes : users', () => {
             'email',
             'username',
           ]);
+          done();
+        });
+    });
+  });
+
+  describe('POST /auth/reg', () => {
+    it('should throw error unique type', done => {
+      const newUser = {
+        username: 'admin',
+        email: 'admin@admin.ru',
+        password: '123',
+      };
+      request(server)
+        .post('/auth/reg')
+        .send(newUser)
+        .end((err, res) => {
+          expect(res.status).to.be.eql(422);
+          expect(res.headers['content-type']).include('application/json');
+          expect(res.body.status).to.be.eql('error');
+          expect(res.body.errorMsg).to.have.all.keys(['email', 'username']);
           done();
         });
     });

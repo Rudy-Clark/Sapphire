@@ -39,7 +39,8 @@ router.post('/login', async (ctx, next) =>
 router.post('/reg', async ctx => {
   try {
     const { body } = ctx.request;
-    const newUser = await Users.query().insert(body);
+    await Users.checkUniqueness(body, ['username', 'email']);
+    const newUser = await Users.createUser(body);
 
     const payload = {
       id: newUser.id,
@@ -58,6 +59,7 @@ router.post('/reg', async ctx => {
       token: `JWT ${token}`,
     };
   } catch (err) {
+    if (!err) return;
     const errors = parseError(err);
     ctx.status = 422;
     ctx.body = {
