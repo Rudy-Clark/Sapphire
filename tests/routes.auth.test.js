@@ -9,7 +9,7 @@ import { server } from '../src/app';
 import knex from '../src/db/connection';
 
 describe('routes : auth', () => {
-  before(() => server.listen(1337));
+  before(() => server.listen(8080));
   after(() => server.close());
 
   // eslint-disable-next-line arrow-body-style

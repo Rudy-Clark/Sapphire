@@ -10,8 +10,8 @@ import passport from '../src/passport';
 import { server } from '../src/app';
 import knex from '../src/db/connection';
 
-describe.only('routes : auth', () => {
-  before(() => server.listen(1337));
+describe('routes : auth', () => {
+  before(() => server.listen(8080));
   after(() => server.close());
   let authenticate;
   // eslint-disable-next-line arrow-body-style
@@ -31,7 +31,6 @@ describe.only('routes : auth', () => {
 
   describe('GET /auth/status', () => {
     beforeEach(() => {
-      // authenticate.returns(true);
       authenticate.yields(null, true);
     });
     it('should authenticate success', done => {
@@ -41,6 +40,22 @@ describe.only('routes : auth', () => {
           expect(res.status).to.eql(200);
           expect(res.body.status).to.be.eql('success');
           expect(res.body.msg).to.be.eql('Authenticated');
+          done();
+        });
+    });
+  });
+
+  describe('GET /auth/status', () => {
+    beforeEach(() => {
+      authenticate.yields(null, false);
+    });
+    it('should return error for unauthenticated user', done => {
+      request(server)
+        .get('/auth/status')
+        .end((err, res) => {
+          expect(res.status).to.eql(401);
+          expect(res.body.status).to.be.eql('error');
+          expect(res.body.msg).to.be.eql('Unauthenticated');
           done();
         });
     });

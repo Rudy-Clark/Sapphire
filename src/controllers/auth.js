@@ -82,7 +82,7 @@ router.get('/status', async ctx => {
         ctx.status = 401;
         ctx.body = {
           status: 'error',
-          msg: 'Unauthorized',
+          msg: 'Unauthenticated',
         };
       }
     });
