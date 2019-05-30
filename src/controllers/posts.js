@@ -5,7 +5,8 @@ const router = new Router({ prefix: '/posts' });
 
 router.get('/', async ctx => {
   try {
-    const posts = await Posts.query();
+    const posts = await Posts.query()
+      .eager('[user(selectName)]', { selectName: builder => builder.select('username')});
     ctx.body = { status: 'success', posts };
   } catch (error) {
     ctx.status = 500;
