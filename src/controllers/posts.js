@@ -6,7 +6,10 @@ const router = new Router({ prefix: '/posts' });
 router.get('/', async ctx => {
   try {
     const posts = await Posts.query()
-      .eager('[user(selectName)]', { selectName: builder => builder.select('username')});
+      .select('id', 'title', 'content', 'created_at', 'updated_at')
+      .eager('[user(selectName)]', {
+        selectName: builder => builder.select('username'),
+      });
     ctx.body = { status: 'success', posts };
   } catch (error) {
     ctx.status = 500;
@@ -17,7 +20,12 @@ router.get('/', async ctx => {
 router.get('/:id', async ctx => {
   try {
     const { id } = ctx.params;
-    const post = await Posts.query().findById(id);
+    const post = await Posts.query()
+      .eager('[user(selectName)]', {
+        selectName: builder => builder.select('username'),
+      })
+      .select('id', 'title', 'content', 'created_at', 'updated_at')
+      .findById(id);
     if (!post) {
       ctx.status = 400;
       ctx.body = {
