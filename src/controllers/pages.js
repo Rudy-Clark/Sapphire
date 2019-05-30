@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import Pages from '../models/Pages';
 
-const router = new Router({ prefix: '/api/pages' });
+const router = new Router({ prefix: '/pages' });
 
 router.get('/:name', async ctx => {
   try {

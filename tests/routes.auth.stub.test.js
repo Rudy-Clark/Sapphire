@@ -10,7 +10,7 @@ import passport from '../src/passport';
 import { server } from '../src/app';
 import knex from '../src/db/connection';
 
-describe('routes : auth', () => {
+describe('routes : auth | stub', () => {
   before(() => server.listen(8080));
   after(() => server.close());
   let authenticate;
@@ -56,6 +56,21 @@ describe('routes : auth', () => {
           expect(res.status).to.eql(401);
           expect(res.body.status).to.be.eql('error');
           expect(res.body.msg).to.be.eql('Unauthenticated');
+          done();
+        });
+    });
+  });
+
+  describe('GET /auth/logout', () => {
+    beforeEach(() => {
+      authenticate.yields(null, true);
+    });
+    it('should logout authenticated user', done => {
+      request(server)
+        .get('/auth/status')
+        .end((err, res) => {
+          expect(res.status).to.eql(200);
+          expect(res.body.status).to.be.eql('success');
           done();
         });
     });

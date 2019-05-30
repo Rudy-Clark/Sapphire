@@ -21,10 +21,10 @@ describe('routes : pages', () => {
 
   afterEach(async () => knex.migrate.rollback());
 
-  describe('GET /api/pages/:name', () => {
+  describe('GET /pages/:name', () => {
     it('should return home page', done => {
       request(server)
-        .get('/api/pages/home')
+        .get('/pages/home')
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(err).to.be.null;

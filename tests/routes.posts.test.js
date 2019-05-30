@@ -21,10 +21,10 @@ describe('routes : posts', () => {
 
   afterEach(async () => knex.migrate.rollback());
 
-  describe('GET /api/posts', () => {
+  describe('GET /posts', () => {
     it('should return all posts', done => {
       request(server)
-        .get('/api/posts')
+        .get('/posts')
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -43,10 +43,10 @@ describe('routes : posts', () => {
     });
   });
 
-  describe('GET /api/pages/:id', () => {
+  describe('GET /pages/:id', () => {
     it('should return one post', done => {
       request(server)
-        .get('/api/posts/2')
+        .get('/posts/2')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res.status).to.eql(200);

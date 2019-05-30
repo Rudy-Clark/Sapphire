@@ -14,23 +14,22 @@ router.post('/login', async (ctx, next) =>
       ctx.status = 401;
       ctx.body = {
         status: 'error',
-        msg: 'Invalid password or email',
+        msg: 'Неверный E-mail или Пароль',
       };
     } else {
-      const payload = {
-        id: user.id,
-        email: user.email,
-        password: user.password,
-        name: user.username,
-        role: user.admin ? 'admin' : 'user',
-      };
-
-      const token = jwt.sign(payload, secretJwt);
+      const token = jwt.sign({ id: user.id }, secretJwt, {
+        expiresIn: '30d',
+      });
       ctx.status = 200;
       ctx.body = {
-        name: user.username,
+        user: {
+          id: user.id,
+          name: user.username,
+          email: user.email,
+          role: user.role,
+        },
         status: 'success',
-        token: `JWT ${token}`,
+        token: `Bearer ${token}`,
       };
     }
   })(ctx, next),
@@ -45,18 +44,19 @@ router.post('/reg', async ctx => {
     const payload = {
       id: newUser.id,
       email: newUser.email,
-      password: newUser.password,
       name: newUser.username,
       role: newUser.admin ? 'admin' : 'user',
     };
 
-    const token = jwt.sign({ ...payload, password: null }, secretJwt);
+    const token = jwt.sign({ id: payload.id }, secretJwt, {
+      expiresIn: '30d',
+    });
 
     ctx.status = 201;
     ctx.body = {
       user: payload,
       status: 'success',
-      token: `JWT ${token}`,
+      token: `Bearer ${token}`,
     };
   } catch (err) {
     if (!err) return;
@@ -69,9 +69,10 @@ router.post('/reg', async ctx => {
   }
 });
 
-router.get('/status', async ctx => {
+router.get('/status', async (ctx, next) => {
   try {
     await passport.authenticate('jwt', (err, user) => {
+      if (err) throw new Error(err);
       if (user) {
         ctx.status = 200;
         ctx.body = {
@@ -85,7 +86,26 @@ router.get('/status', async ctx => {
           msg: 'Unauthenticated',
         };
       }
-    });
+    })(ctx, next);
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = {
+      status: 'error',
+      msg: error,
+    };
+  }
+});
+
+router.get('/logout', async (ctx, next) => {
+  try {
+    await passport.authenticate('jwt', (err, user) => {
+      if (user) {
+        ctx.status = 200;
+        ctx.body = { status: 'success' };
+      } else {
+        throw new Error('Cant find Bearer Token');
+      }
+    })(ctx, next);
   } catch (error) {
     ctx.status = 500;
     ctx.body = {

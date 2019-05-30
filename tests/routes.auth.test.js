@@ -37,7 +37,7 @@ describe('routes : auth', () => {
           expect(err).to.be.null;
           expect(res.status).to.be.eql(200);
           expect(res.body.status).to.be.eql('success');
-          expect(res.body).to.have.all.keys(['name', 'token', 'status']);
+          expect(res.body).to.have.all.keys(['user', 'token', 'status']);
           done();
         });
     });
@@ -55,7 +55,7 @@ describe('routes : auth', () => {
           expect(err).to.be.null;
           expect(res.status).to.be.eql(401);
           expect(res.body.status).to.be.eql('error');
-          expect(res.body.msg).to.have.include('Invalid password or email');
+          expect(res.body.msg).to.have.include('Неверный E-mail или Пароль');
           done();
         });
     });
@@ -81,7 +81,6 @@ describe('routes : auth', () => {
             'id',
             'name',
             'email',
-            'password',
             'role',
           ]);
           done();

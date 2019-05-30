@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import Posts from '../models/Posts';
 
-const router = new Router({ prefix: '/api/posts' });
+const router = new Router({ prefix: '/posts' });
 
 router.get('/', async ctx => {
   try {
