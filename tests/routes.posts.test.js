@@ -43,7 +43,7 @@ describe('routes : posts', () => {
     });
   });
 
-  describe('GET /pages/:id', () => {
+  describe('GET /posts/:id', () => {
     it('should return one post', done => {
       request(server)
         .get('/posts/2')
