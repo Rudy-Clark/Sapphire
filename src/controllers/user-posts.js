@@ -25,7 +25,7 @@ router.get('/posts', async ctx => {
       .where('author_id', user.id);
     ctx.body = { status: 'success', posts };
   } catch (error) {
-    ctx.status = 500;
+    ctx.status = 403;
     ctx.body = { status: 'error', msg: error };
   }
 });
@@ -35,14 +35,16 @@ router.get('/posts/:id', async ctx => {
     const { id } = ctx.params;
     const { user } = ctx.state;
     if (isEmpty(user)) throw new Error('Unauthenticated');
-    const posts = await Posts.query()
+    const post = await Posts.query()
       .select('id', 'title', 'content', 'created_at', 'updated_at')
       .where('author_id', user.id)
       .where('id', id)
       .first();
-    ctx.body = { status: 'success', posts: posts || null };
+    if (!post) ctx.throw(404, 'Not Found');
+    ctx.status = 200;
+    ctx.body = { status: 'success', post };
   } catch (error) {
-    ctx.status = 500;
+    ctx.status = 403;
     ctx.body = { status: 'error', msg: error };
   }
 });

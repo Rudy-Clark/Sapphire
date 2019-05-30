@@ -9,6 +9,7 @@ import apiPosts from './controllers/posts';
 import apiPages from './controllers/pages';
 import apiAuth from './controllers/auth';
 import apiUsers from './controllers/user-posts';
+import apiAdmin from './controllers/admin';
 import passport from './passport';
 
 const app = new Koa();
@@ -25,6 +26,7 @@ app.use(apiPosts.routes());
 app.use(apiPages.routes());
 app.use(apiAuth.routes());
 app.use(apiUsers.routes());
+app.use(apiAdmin.routes());
 
 export const server = app.listen(PORT, () => {
   console.log(`App listen on http://localhost:${PORT}`);
