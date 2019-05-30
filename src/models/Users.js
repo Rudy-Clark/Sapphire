@@ -1,14 +1,28 @@
 import { Model, ValidationError } from 'objection';
 import bcrypt from 'bcryptjs';
-import { isEmpty, isNil } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import connection from '../db/connection';
+import Posts from './Posts';
 
 Model.knex(connection);
 
 export default class Users extends Model {
   static get tableName() {
     return 'users';
+  }
+
+  static get relationMappings() {
+    return {
+      posts: {
+        relation: Model.HasManyRelation,
+        modelClass: Posts,
+        join: {
+          from: 'users.id',
+          to: 'posts.author_id',
+        },
+      },
+    };
   }
 
   static get jsonSchema() {
