@@ -9,7 +9,7 @@ import SignIn from './SignIn';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(12),
   },
 }));
 

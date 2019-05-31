@@ -6,6 +6,7 @@ const pages = {
 };
 
 export function loadPage(payload) {
+  // eslint-disable-next-line consistent-return
   async function loadHomePage() {
     try {
       const response = await axios.all([
