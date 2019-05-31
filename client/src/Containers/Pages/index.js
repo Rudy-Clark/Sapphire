@@ -3,7 +3,7 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Switch } from 'react-router';
 
-import Home from './home';
+import Home from './Home';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 

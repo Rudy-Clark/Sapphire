@@ -1,9 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
+import createSagaMiddleware from 'redux-saga';
+
 import createRootReducer from './reducers';
 
 export const history = createBrowserHistory();
+export const sagaMiddleware = createSagaMiddleware();
 
 export default preloadState => {
   const composeEnhancer =
@@ -12,7 +15,7 @@ export default preloadState => {
   const store = createStore(
     createRootReducer(history),
     preloadState,
-    composeEnhancer(applyMiddleware(routerMiddleware(history))),
+    composeEnhancer(applyMiddleware(sagaMiddleware, routerMiddleware(history))),
   );
 
   // Hot reloading
