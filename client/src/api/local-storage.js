@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 
-const keys = ['username', 'token'];
+const keys = ['name', 'token', 'role'];
 
 const setItem = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
