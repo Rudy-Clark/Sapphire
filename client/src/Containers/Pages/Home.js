@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -19,11 +20,13 @@ function Home({ page }) {
         url={page.wallpaper}
       />
       <Grid container spacing={4}>
-        {page.posts.map(post => (
-          <Grid item key={post.title} xs={12} md={6}>
-            <PostCard {...post} />
-          </Grid>
-        ))}
+        {!page.posts.length
+          ? 'Нет сататьей'
+          : page.posts.map(post => (
+              <Grid item key={post.title} xs={12} md={6}>
+                <PostCard {...post} />
+              </Grid>
+            ))}
       </Grid>
     </main>
   );

@@ -9,6 +9,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { signIn } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -35,8 +39,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn({ login }) {
   const classes = useStyles();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const { target } = e;
+    const email = target.email.value.trim();
+    const password = target.password.value.trim();
+    if (!email || !password) return false;
+    login({ email, password });
+    return true;
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,14 +62,14 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Войти
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="E-mail"
             name="email"
             autoComplete="email"
             autoFocus
@@ -66,15 +80,15 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Пароль"
             type="password"
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -89,3 +103,16 @@ export default function SignIn() {
     </Container>
   );
 }
+
+SignIn.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+  login: data => dispatch(signIn(data)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SignIn);
