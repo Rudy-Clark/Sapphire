@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -38,9 +37,6 @@ function Post({ match, dispatch }) {
       const {
         data: { post },
       } = await getPost(match.params.id);
-
-      console.log(post);
-
       setPage({
         title: post.title,
         author: post.user.username,

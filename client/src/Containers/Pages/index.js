@@ -7,6 +7,7 @@ import Home from './Home';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Post from './Post';
+import NotFound from './NotFound';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -23,6 +24,7 @@ function Pages() {
         <Route path="/signUp" component={SignUp} />
         <Route path="/signIn" component={SignIn} />
         <Route path="/posts/:id" component={Post} />
+        <Route component={NotFound} />
       </Switch>
     </Container>
   );
