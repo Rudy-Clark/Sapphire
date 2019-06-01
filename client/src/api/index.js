@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const pages = {
   home: '/',
+  post: '/post',
 };
 
 export function loadPage(payload) {
@@ -22,12 +23,13 @@ export function loadPage(payload) {
         }
         return object;
       }, {});
-      console.log(content);
+      // console.log(content);
       return content;
     } catch (error) {
       console.error(error);
     }
   }
+
   switch (payload.location.pathname) {
     case pages.home:
       return loadHomePage;

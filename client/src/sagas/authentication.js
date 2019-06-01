@@ -26,6 +26,12 @@ function* watchSignUp() {
   }
 }
 
+function* watchLogout() {
+  while (true) {
+    yield take(LOGOUT);
+  }
+}
+
 export default function* watchAuth() {
-  yield fork(all, [fork(watchSignUp), fork(watchSignIn)]);
+  yield all([fork(watchSignUp), fork(watchSignIn), fork(watchLogout)]);
 }

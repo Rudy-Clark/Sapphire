@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router';
 import Home from './Home';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
+import Post from './Post';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -21,6 +22,7 @@ function Pages() {
         <Route exact path="/" component={Home} />
         <Route path="/signUp" component={SignUp} />
         <Route path="/signIn" component={SignIn} />
+        <Route path="/posts/:id" component={Post} />
       </Switch>
     </Container>
   );

@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 function Post({ id, title, content, user }) {
   const classes = useStyles();
   return (
-    <CardActionArea component={Link} to={`post/${id}`}>
+    <CardActionArea component={Link} to={`posts/${id}`}>
       <Card className={classes.card}>
         <div className={classes.cardDetails}>
           <CardContent>
