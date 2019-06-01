@@ -22,12 +22,8 @@ router.post('/login', async (ctx, next) =>
       });
       ctx.status = 200;
       ctx.body = {
-        user: {
-          id: user.id,
-          name: user.username,
-          email: user.email,
-          role: user.role,
-        },
+        name: user.username,
+        role: user.admin ? 'admin' : 'user',
         status: 'success',
         token: `Bearer ${token}`,
       };
@@ -41,20 +37,14 @@ router.post('/reg', async ctx => {
     await Users.checkUniqueness(body, ['username', 'email']);
     const newUser = await Users.createUser(body);
 
-    const payload = {
-      id: newUser.id,
-      email: newUser.email,
-      name: newUser.username,
-      role: newUser.admin ? 'admin' : 'user',
-    };
-
-    const token = jwt.sign({ id: payload.id }, secretJwt, {
+    const token = jwt.sign({ id: newUser.id }, secretJwt, {
       expiresIn: '30d',
     });
 
     ctx.status = 201;
     ctx.body = {
-      user: payload,
+      role: newUser.admin ? 'admin' : 'user',
+      name: newUser.username,
       status: 'success',
       token: `Bearer ${token}`,
     };

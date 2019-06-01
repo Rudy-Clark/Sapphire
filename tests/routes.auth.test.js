@@ -37,7 +37,12 @@ describe('routes : auth', () => {
           expect(err).to.be.null;
           expect(res.status).to.be.eql(200);
           expect(res.body.status).to.be.eql('success');
-          expect(res.body).to.have.all.keys(['user', 'token', 'status']);
+          expect(res.body).to.have.all.keys([
+            'name',
+            'role',
+            'token',
+            'status',
+          ]);
           done();
         });
     });
@@ -77,11 +82,11 @@ describe('routes : auth', () => {
           expect(res.headers['content-type']).include('application/json');
           expect(res.body.status).to.be.eql('success');
           expect(res.body.token).to.be.a('string');
-          expect(res.body.user).to.have.all.keys([
-            'id',
+          expect(res.body).to.have.all.keys([
             'name',
-            'email',
             'role',
+            'token',
+            'status',
           ]);
           done();
         });
