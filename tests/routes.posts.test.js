@@ -62,4 +62,16 @@ describe('routes : posts', () => {
         });
     });
   });
+
+  describe('GET /posts/:id', () => {
+    it('should throw error with 404', done => {
+      request(server)
+        .get('/posts/99999')
+        .end((err, res) => {
+          expect(res.status).to.eql(404);
+          expect(res.body.status).to.eql('error');
+          done();
+        });
+    });
+  });
 });

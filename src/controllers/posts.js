@@ -27,7 +27,7 @@ router.get('/:id', async ctx => {
       .select('id', 'title', 'content', 'created_at', 'updated_at')
       .findById(id);
     if (!post) {
-      ctx.status = 400;
+      ctx.status = 404;
       ctx.body = {
         status: 'error',
         msg: `Can't find this post`,
