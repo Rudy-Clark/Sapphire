@@ -12,7 +12,7 @@ const request = (state = initialState, action) => {
     case REQUEST_SUCCESS:
       return { loading: false, error: null };
     case REQUEST_ERROR:
-      return { loading: false, error: action.payload };
+      return { loading: false, error: true, ...action.payload };
     default:
       return state;
   }
