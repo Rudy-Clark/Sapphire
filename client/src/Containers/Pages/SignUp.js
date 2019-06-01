@@ -8,6 +8,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { signUp } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -34,8 +38,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+function SignUp({ reg }) {
   const classes = useStyles();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const { target } = e;
+    const username = target.username.value.trim();
+    const email = target.email.value.trim();
+    const password = target.password.value.trim();
+    if (!email || !username || !password) return false;
+    reg({ username, email, password });
+    return true;
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -47,7 +62,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Регистрация
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
@@ -56,7 +71,7 @@ export default function SignIn() {
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="username"
                 label="Логин"
                 autoFocus
               />
@@ -99,3 +114,16 @@ export default function SignIn() {
     </Container>
   );
 }
+
+SignUp.propTypes = {
+  reg: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+  reg: data => dispatch(signUp(data)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SignUp);
