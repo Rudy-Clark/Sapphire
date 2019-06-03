@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withFormik } from 'formik';
 
 import { signUp } from '../../actions';
 
@@ -38,19 +39,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SignUp({ reg }) {
+function SignUp({
+  handleSubmit,
+  handleBlur,
+  handleChange,
+  errors,
+  values,
+  touched,
+}) {
   const classes = useStyles();
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const { target } = e;
-    const username = target.username.value.trim();
-    const email = target.email.value.trim();
-    const password = target.password.value.trim();
-    if (!email || !username || !password) return false;
-    reg({ username, email, password });
-    return true;
-  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -69,7 +66,11 @@ function SignUp({ reg }) {
                 autoComplete="lname"
                 name="username"
                 variant="outlined"
-                required
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.username && !!errors.username}
+                helperText={errors.username ? errors.username : ''}
                 fullWidth
                 id="username"
                 label="Логин"
@@ -79,7 +80,11 @@ function SignUp({ reg }) {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.email && !!errors.email}
+                helperText={errors.email ? errors.email : ''}
                 fullWidth
                 id="email"
                 label="E-mail"
@@ -90,7 +95,11 @@ function SignUp({ reg }) {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.password && !!errors.password}
+                helperText={errors.password ? errors.password : ''}
                 fullWidth
                 name="password"
                 label="Пароль"
@@ -116,14 +125,64 @@ function SignUp({ reg }) {
 }
 
 SignUp.propTypes = {
-  reg: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  values: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
 };
+
+const wrapWithFormik = withFormik({
+  mapPropsToValues: ({ reg, serErrors }) => ({
+    email: '',
+    password: '',
+    username: '',
+    reg,
+    serErrors,
+  }),
+  handleSubmit: values => {
+    values.reg({
+      email: values.email,
+      password: values.password,
+      username: values.username,
+    });
+  },
+  validate: values => {
+    const errors = {};
+
+    if (!values.username) {
+      errors.username = 'Логин не может быть пустым';
+    } else if (values.serErrors.username) {
+      errors.username = values.serErrors.username;
+    }
+
+    if (!values.email) {
+      errors.email = 'E-mail не может быть пустым';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      errors.email = 'Неправильный формат Email';
+    } else if (values.serErrors.email) {
+      errors.email = values.serErrors.email;
+    }
+
+    if (!values.password) {
+      errors.password = 'Пароль не может быть пустым';
+    }
+
+    return errors;
+  },
+  displayName: 'SignUp',
+})(SignUp);
+
+const mapStateToProps = state => ({
+  serErrors: state.formErrors.reg,
+});
 
 const mapDispatchToProps = dispatch => ({
   reg: data => dispatch(signUp(data)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
-)(SignUp);
+)(wrapWithFormik);

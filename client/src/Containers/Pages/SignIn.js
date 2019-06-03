@@ -102,7 +102,7 @@ function SignIn({
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Войти
           </Button>
         </form>
       </div>
@@ -113,10 +113,19 @@ function SignIn({
 SignIn.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   values: PropTypes.object,
+  touched: PropTypes.object,
+  errors: PropTypes.object,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
 };
 
 const wrapWithFormik = withFormik({
-  mapPropsToValues: ({ login }) => ({ email: '', password: '', login }),
+  mapPropsToValues: ({ login, serErrors }) => ({
+    email: '',
+    password: '',
+    login,
+    serErrors,
+  }),
   handleSubmit: values => {
     values.login({ email: values.email, password: values.password });
   },
@@ -126,7 +135,9 @@ const wrapWithFormik = withFormik({
     if (!values.email) {
       errors.email = 'E-mail не может быть пустым';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = 'Неправильный формат Email';
+      errors.email = 'Неверный формат почты';
+    } else if (values.serErrors.email) {
+      errors.email = values.serErrors.email;
     }
 
     if (!values.password) {
@@ -138,11 +149,15 @@ const wrapWithFormik = withFormik({
   displayName: 'SignIn',
 })(SignIn);
 
+const mapStateToProps = state => ({
+  serErrors: state.formErrors.login,
+});
+
 const mapDispatchToProps = dispatch => ({
   login: data => dispatch(signIn(data)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(wrapWithFormik);
