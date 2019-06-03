@@ -5,14 +5,19 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { isEmpty } from 'lodash';
+import { push as routerPush } from 'connected-react-router';
 
-import { getPost } from '../../api/posts';
+import { postById } from '../../api/pages';
 import { REQUEST, REQUEST_SUCCESS } from '../../actions/constants';
 
 const useStyles = makeStyles(theme => ({
   info: {
     color: '#94918e',
     padding: theme.spacing(1),
+  },
+  content: {
+    lineHeight: 1.8,
   },
 }));
 
@@ -22,57 +27,63 @@ const parseDate = utc => {
   return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 };
 
-function Post({ match, dispatch }) {
+function Post({ match, push, load, endLoad }) {
+  const classes = useStyles();
   const initialState = {
     title: '',
     author: '',
     content: '',
-    created_at: '',
   };
-  const [page, setPage] = useState({ ...initialState });
+
+  const [post, setPost] = useState(initialState);
+
   useEffect(() => {
-    const fetch = async () => {
-      dispatch({ type: REQUEST });
-
-      const {
-        data: { post },
-      } = await getPost(match.params.id);
-      setPage({
-        title: post.title,
-        author: post.user.username,
-        content: post.content,
-        created_at: post.created_at,
+    const req = async () => {
+      load();
+      const resp = await postById(match.params.id);
+      console.log(resp);
+      if (isEmpty(resp)) push('/404');
+      setPost({
+        title: resp.title,
+        author: resp.user.username,
+        content: resp.content,
       });
-
-      dispatch({ type: REQUEST_SUCCESS });
+      endLoad();
     };
-    fetch();
-    return () => setPage({ ...initialState });
+    req();
+    return () => setPost(initialState);
   }, []);
-  const classes = useStyles();
+
   return (
     <Container component="main" maxWidth="md">
       <Typography align="center" component="h1" variant="h1">
-        {page.title}
+        {post.title}
       </Typography>
       <div className={classes.info}>
-        <Typography component="p">Автор: {page.author}</Typography>
+        <Typography component="p">Автор: {post.author}</Typography>
         <Typography component="p">
-          Опубликован: {parseDate(page.created_at)}
+          Опубликован: {parseDate(post.created_at)}
         </Typography>
       </div>
-      <div className={classes.content}>{page.content}</div>
+      <div className={classes.content}>{post.content}</div>
     </Container>
   );
 }
 
 Post.propTypes = {
+  load: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
+  endLoad: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  page: state.page,
+const mapDispatchToProps = dispatch => ({
+  load: () => dispatch({ type: REQUEST }),
+  push: url => dispatch(routerPush(url)),
+  endLoad: () => dispatch({ type: REQUEST_SUCCESS }),
 });
 
-export default connect(mapStateToProps)(Post);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Post);

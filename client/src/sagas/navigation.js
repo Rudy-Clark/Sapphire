@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 
 import { ROUTE_CHANGE, REQUEST, REQUEST_SUCCESS } from '../actions/constants';
 import { setReqError, setContent } from '../actions';
-import { loadPage } from '../api';
+import { loadPage } from '../api/pages';
 
 function* execLoad(fetch) {
   if (!fetch) yield cancel();

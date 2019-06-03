@@ -25,4 +25,4 @@ export const getLocalStorage = () => {
   }, {});
 };
 
-export const removeLocalStorage = () => keys.forEach(key => removeItem(key));
+export const clearLocalStorage = () => keys.forEach(key => removeItem(key));

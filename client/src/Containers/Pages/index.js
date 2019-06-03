@@ -25,6 +25,7 @@ function Pages() {
         <Route path="/signIn" component={SignIn} />
         <Route path="/posts/:id" component={Post} />
         <Route component={NotFound} />
+        <Route path="/404" component={NotFound} />
       </Switch>
     </Container>
   );

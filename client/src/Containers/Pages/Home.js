@@ -1,17 +1,41 @@
 /* eslint-disable indent */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
+import { push as routerPush } from 'connected-react-router';
+
+import { REQUEST, REQUEST_SUCCESS } from '../../actions/constants';
+import { home } from '../../api/pages';
 
 import Wallpaper from '../../Components/Wallpaper';
 import PostCard from '../../Components/PostCard';
 
 // const useStyles = makeStyles(() => ({}));
 
-function Home({ page }) {
-  // const classes = useStyles();
+function Home({ load, push, endLoad }) {
+  const initialState = {
+    title: '',
+    subtitle: '',
+    wallpaper: '',
+    posts: [],
+  };
+
+  const [page, setPage] = useState(initialState);
+
+  useEffect(() => {
+    const req = async () => {
+      load();
+      const response = await home();
+      if (!response) push('/404');
+      setPage(response);
+      endLoad();
+    };
+    req();
+    return () => setPage(initialState);
+  }, []);
+
   return (
     <main>
       <Wallpaper
@@ -32,11 +56,18 @@ function Home({ page }) {
   );
 }
 Home.propTypes = {
-  page: PropTypes.object.isRequired,
+  load: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
+  endLoad: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  page: state.page,
+const mapDispatchToProps = dispatch => ({
+  load: () => dispatch({ type: REQUEST }),
+  push: url => dispatch(routerPush(url)),
+  endLoad: () => dispatch({ type: REQUEST_SUCCESS }),
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Home);
