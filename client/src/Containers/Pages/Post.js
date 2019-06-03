@@ -33,6 +33,7 @@ function Post({ match, push, load, endLoad }) {
     title: '',
     author: '',
     content: '',
+    created_at: '',
   };
 
   const [post, setPost] = useState(initialState);
@@ -41,14 +42,19 @@ function Post({ match, push, load, endLoad }) {
     const req = async () => {
       load();
       const resp = await postById(match.params.id);
-      console.log(resp);
-      if (isEmpty(resp)) push('/404');
+      if (isEmpty(resp)) {
+        endLoad();
+        return push('/404');
+      }
       setPost({
         title: resp.title,
         author: resp.user.username,
         content: resp.content,
+        created_at: resp.created_at,
       });
       endLoad();
+
+      return resp;
     };
     req();
     return () => setPost(initialState);
