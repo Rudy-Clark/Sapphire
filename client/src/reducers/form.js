@@ -1,12 +1,12 @@
 const initialState = {
   login: {
-    email: [],
-    password: [],
+    email: '',
+    password: '',
   },
   reg: {
-    username: [],
-    email: [],
-    password: [],
+    username: '',
+    email: '',
+    password: '',
   },
 };
 

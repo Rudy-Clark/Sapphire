@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withFormik } from 'formik';
 
 import { signIn } from '../../actions';
 
@@ -39,18 +40,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SignIn({ login }) {
+function SignIn({
+  handleSubmit,
+  values,
+  touched,
+  errors,
+  handleChange,
+  handleBlur,
+}) {
   const classes = useStyles();
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const { target } = e;
-    const email = target.email.value.trim();
-    const password = target.password.value.trim();
-    if (!email || !password) return false;
-    login({ email, password });
-    return true;
-  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -66,24 +64,32 @@ function SignIn({ login }) {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="email"
             label="E-mail"
             name="email"
             autoComplete="email"
             autoFocus
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.email && Boolean(errors.email)}
+            helperText={errors.email ? errors.email : ''}
           />
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Пароль"
             type="password"
             id="password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
             autoComplete="current-password"
+            error={touched.password && Boolean(errors.password)}
+            helperText={errors.password ? errors.password : ''}
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -105,8 +111,32 @@ function SignIn({ login }) {
 }
 
 SignIn.propTypes = {
-  login: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  values: PropTypes.object,
 };
+
+const wrapWithFormik = withFormik({
+  mapPropsToValues: ({ login }) => ({ email: '', password: '', login }),
+  handleSubmit: values => {
+    values.login({ email: values.email, password: values.password });
+  },
+  validate: values => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = 'E-mail не может быть пустым';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      errors.email = 'Неправильный формат Email';
+    }
+
+    if (!values.password) {
+      errors.password = 'Пароль не может быть пустым';
+    }
+
+    return errors;
+  },
+  displayName: 'SignIn',
+})(SignIn);
 
 const mapDispatchToProps = dispatch => ({
   login: data => dispatch(signIn(data)),
@@ -115,4 +145,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps,
-)(SignIn);
+)(wrapWithFormik);
