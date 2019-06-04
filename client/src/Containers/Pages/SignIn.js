@@ -123,12 +123,12 @@ function SignIn({
 
 SignIn.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  values: PropTypes.object,
-  touched: PropTypes.object,
-  errors: PropTypes.object,
+  values: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  serErrors: PropTypes.object,
+  serErrors: PropTypes.object.isRequired,
   submitting: PropTypes.bool.isRequired,
 };
 

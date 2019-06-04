@@ -47,6 +47,8 @@ function SignUp({
   errors,
   values,
   touched,
+  serErrors,
+  submitting,
 }) {
   const classes = useStyles();
 
@@ -68,7 +70,10 @@ function SignUp({
                 name="username"
                 variant="outlined"
                 value={values.username}
-                onChange={handleChange}
+                onChange={e => {
+                  handleChange.call(this, e);
+                  serErrors.username = '';
+                }}
                 onBlur={handleBlur}
                 error={touched.username && !!errors.username}
                 helperText={errors.username ? errors.username : ''}
@@ -77,12 +82,18 @@ function SignUp({
                 label="Логин"
                 autoFocus
               />
+              {serErrors.username && (
+                <FormHelperText error>{serErrors.username}</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 value={values.email}
-                onChange={handleChange}
+                onChange={e => {
+                  handleChange.call(this, e);
+                  serErrors.email = '';
+                }}
                 onBlur={handleBlur}
                 error={touched.email && !!errors.email}
                 helperText={errors.email ? errors.email : ''}
@@ -92,6 +103,9 @@ function SignUp({
                 name="email"
                 autoComplete="email"
               />
+              {serErrors.email && (
+                <FormHelperText error>{serErrors.email}</FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -116,6 +130,7 @@ function SignUp({
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={submitting}
           >
             Зарегистрироваться
           </Button>
@@ -132,15 +147,16 @@ SignUp.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   values: PropTypes.object.isRequired,
   touched: PropTypes.object.isRequired,
+  serErrors: PropTypes.object.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 const wrapWithFormik = withFormik({
-  mapPropsToValues: ({ reg, serErrors }) => ({
+  mapPropsToValues: ({ reg }) => ({
     email: '',
     password: '',
     username: '',
     reg,
-    serErrors,
   }),
   handleSubmit: values => {
     values.reg({
@@ -154,16 +170,16 @@ const wrapWithFormik = withFormik({
 
     if (!values.username) {
       errors.username = 'Логин не может быть пустым';
-    } else if (values.serErrors.username) {
-      errors.username = values.serErrors.username;
+    } else if (values.username.trim().length < 3) {
+      errors.username = 'не меньше 3 символов';
     }
 
     if (!values.email) {
       errors.email = 'E-mail не может быть пустым';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = 'Неверный формат';
-    } else if (values.serErrors.email) {
-      errors.email = values.serErrors.email;
+    } else if (values.email.trim().length < 3) {
+      errors.email = 'не меньше 3 символов';
     }
 
     if (!values.password) {
@@ -177,6 +193,7 @@ const wrapWithFormik = withFormik({
 
 const mapStateToProps = state => ({
   serErrors: state.formErrors.reg,
+  submitting: state.formErrors.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

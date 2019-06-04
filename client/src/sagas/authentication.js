@@ -9,7 +9,7 @@ import {
   FORM_REQUEST,
   FORM_REQUEST_END,
 } from '../actions/constants';
-import { setLoginError } from '../actions';
+import { setLoginError, setRegError } from '../actions';
 import { request } from '../api/request';
 
 function* checkSignIn(data) {
@@ -27,9 +27,10 @@ function* checkSignIn(data) {
 function* checkSignUp(data) {
   try {
     yield put({ type: FORM_REQUEST });
-    const resp = yield call(request.post, '/auth/reg');
+    const resp = yield call(request.post, '/auth/reg', data);
   } catch (error) {
-    console.log(error);
+    yield put(setRegError(error.errorMsg));
+    yield put({ type: FORM_REQUEST_END });
   }
 }
 
@@ -38,9 +39,7 @@ function* watchSignIn() {
     try {
       const { data } = yield take(SIGN_IN);
       yield fork(checkSignIn, data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) { console.error(error) }
   }
 }
 
