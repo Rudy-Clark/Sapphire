@@ -7,19 +7,18 @@ const setItem = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-const getItem = key => JSON.parse(localStorage.getItem(key));
-
 const removeItem = key => localStorage.removeItem(key);
 
-export const setLocalStorage = data => {
-  return keys.reduce((object, item) => {
+export const getItem = key => JSON.parse(localStorage.getItem(key));
+
+export const setLocalStorage = data =>
+  keys.reduce((object, item) => {
     if (!isEmpty(data[item])) {
       setItem(item, data[item]);
       object[item] = data[item];
     }
     return object;
   }, {});
-};
 
 export const getLocalStorage = () => {
   if (isEmpty(keys)) return null;
