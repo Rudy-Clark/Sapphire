@@ -153,8 +153,8 @@ const wrapWithFormik = withFormik({
 
     if (!values.password) {
       errors.password = 'Пароль не может быть пустым';
-    } else if (values.password.trim().length < 4) {
-      errors.password = 'не меньше 4 символа';
+    } else if (values.password.trim().length < 3) {
+      errors.password = 'не меньше 3 символа';
     }
 
     return errors;

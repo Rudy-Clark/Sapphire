@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { withFormik } from 'formik';
 
 import { signUp } from '../../actions';

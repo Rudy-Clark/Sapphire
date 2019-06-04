@@ -6,9 +6,10 @@ export const request = axios.create({
   headers: {
     Authorization: `Bearer ${getItem('token')}`,
   },
+  errorHandle: false,
 });
 
 request.interceptors.response.use(
   response => response.data,
-  error => error.response.data,
+  error => Promise.reject(error.response.data),
 );

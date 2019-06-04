@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-condition */
-import { take, put, call, fork, all, cancel } from 'redux-saga/effects';
+import { take, put, call, fork, all } from 'redux-saga/effects';
 // import { isEmpty } from 'lodash';
 
 import {
@@ -10,26 +10,37 @@ import {
   FORM_REQUEST_END,
 } from '../actions/constants';
 import { setLoginError } from '../actions';
-import { login } from '../api/auth';
+import { request } from '../api/request';
 
 function* checkSignIn(data) {
-  yield put({ type: FORM_REQUEST });
-  const res = yield call(login, data);
-  if (res.status === 'error') {
-    yield put(setLoginError({ msg: res.msg }));
+  try {
+    yield put({ type: FORM_REQUEST });
+    const res = yield call(request.post, '/auth/login', data, {
+      errorHandle: false,
+    });
+  } catch (error) {
+    yield put(setLoginError({ msg: error.msg }));
     yield put({ type: FORM_REQUEST_END });
-    yield cancel();
   }
 }
 
 function* checkSignUp(data) {
-  yield console.log(data);
+  try {
+    yield put({ type: FORM_REQUEST });
+    const resp = yield call(request.post, '/auth/reg');
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function* watchSignIn() {
   while (true) {
-    const { data } = yield take(SIGN_IN);
-    yield fork(checkSignIn, data);
+    try {
+      const { data } = yield take(SIGN_IN);
+      yield fork(checkSignIn, data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import {
   ADD_USER,
   DEL_USER,
   SET_LOGIN_ERROR,
+  SET_REG_ERROR,
 } from './constants';
 
 export const setReqError = error => ({
@@ -33,5 +34,10 @@ export const delUser = () => ({
 
 export const setLoginError = payload => ({
   type: SET_LOGIN_ERROR,
+  payload,
+});
+
+export const setRegError = payload => ({
+  type: SET_REG_ERROR,
   payload,
 });

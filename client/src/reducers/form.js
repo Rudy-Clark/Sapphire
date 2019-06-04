@@ -1,4 +1,5 @@
 import {
+  SET_REG_ERROR,
   SET_LOGIN_ERROR,
   RESET_ERRORS,
   FORM_REQUEST,
@@ -19,8 +20,9 @@ const initialState = {
 const formErrors = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOGIN_ERROR:
-      // eslint-disable-next-line no-return-assign
       return { ...state, login: { ...action.payload } };
+    case SET_REG_ERROR:
+      return { ...state, reg: { ...action.payload } };
     case RESET_ERRORS:
       return { ...initialState };
     case FORM_REQUEST:
