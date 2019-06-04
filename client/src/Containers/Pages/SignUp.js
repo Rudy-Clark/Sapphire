@@ -116,7 +116,7 @@ function SignUp({
             color="primary"
             className={classes.submit}
           >
-            Отправить
+            Зарегистрироваться
           </Button>
         </form>
       </div>
@@ -160,7 +160,7 @@ const wrapWithFormik = withFormik({
     if (!values.email) {
       errors.email = 'E-mail не может быть пустым';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = 'Неправильный формат Email';
+      errors.email = 'Неверный формат';
     } else if (values.serErrors.email) {
       errors.email = values.serErrors.email;
     }

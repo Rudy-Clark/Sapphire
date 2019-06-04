@@ -1,11 +1,25 @@
 /* eslint-disable no-constant-condition */
-import { take, put, call, fork, all } from 'redux-saga/effects';
-import { isEmpty } from 'lodash';
+import { take, put, call, fork, all, cancel } from 'redux-saga/effects';
+// import { isEmpty } from 'lodash';
 
-import { SIGN_IN, SIGN_UP, LOGOUT } from '../actions/constants';
+import {
+  SIGN_IN,
+  SIGN_UP,
+  LOGOUT,
+  FORM_REQUEST,
+  FORM_REQUEST_END,
+} from '../actions/constants';
+import { setLoginError } from '../actions';
+import { login } from '../api/auth';
 
 function* checkSignIn(data) {
-  yield console.log(data);
+  yield put({ type: FORM_REQUEST });
+  const res = yield call(login, data);
+  if (res.status === 'error') {
+    yield put(setLoginError({ msg: res.msg }));
+    yield put({ type: FORM_REQUEST_END });
+    yield cancel();
+  }
 }
 
 function* checkSignUp(data) {

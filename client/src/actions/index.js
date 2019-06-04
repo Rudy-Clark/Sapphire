@@ -1,20 +1,15 @@
 import {
   REQUEST_ERROR,
-  SET_PAGE,
   SIGN_IN,
   SIGN_UP,
   ADD_USER,
   DEL_USER,
+  SET_LOGIN_ERROR,
 } from './constants';
 
 export const setReqError = error => ({
   type: REQUEST_ERROR,
   payload: error,
-});
-
-export const setContent = payload => ({
-  type: SET_PAGE,
-  payload,
 });
 
 export const signIn = data => ({
@@ -34,4 +29,9 @@ export const addUser = payload => ({
 
 export const delUser = () => ({
   type: DEL_USER,
+});
+
+export const setLoginError = payload => ({
+  type: SET_LOGIN_ERROR,
+  payload,
 });

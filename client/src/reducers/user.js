@@ -4,6 +4,7 @@ import { ADD_USER, DEL_USER } from '../actions/constants';
 const initialState = {
   name: '',
   role: '',
+  token: '',
   ...getLocalStorage(),
 };
 
