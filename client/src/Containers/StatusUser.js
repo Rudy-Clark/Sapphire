@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
+import UserMenu from '../Components/UserMenu';
+
 const useStyles = makeStyles(() => ({
   link: {
     color: '#fff',
@@ -18,19 +20,19 @@ const useStyles = makeStyles(() => ({
 
 const StatusUser = ({ user }) => {
   const classes = useStyles();
-  if (isEmpty(user.name)) {
-    return (
-      <Fragment>
-        <Link className={classes.link} to="/signIn">
-          <Button className={classes.button}>Войти</Button>
-        </Link>
-        <Link className={classes.link} to="/signUp">
-          <Button className={classes.button}>Регистрация</Button>
-        </Link>
-      </Fragment>
-    );
-  }
-  return null;
+  // if (isEmpty(user.name)) {
+  //   return (
+  //     <Fragment>
+  //       <Link className={classes.link} to="/signIn">
+  //         <Button className={classes.button}>Войти</Button>
+  //       </Link>
+  //       <Link className={classes.link} to="/signUp">
+  //         <Button className={classes.button}>Регистрация</Button>
+  //       </Link>
+  //     </Fragment>
+  //   );
+  // }
+  return <UserMenu user={user} />;
 };
 StatusUser.propTypes = {
   user: PropTypes.object.isRequired,
