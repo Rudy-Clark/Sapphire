@@ -39,7 +39,7 @@ function* watchSignIn() {
     try {
       const { data } = yield take(SIGN_IN);
       yield fork(checkSignIn, data);
-    } catch (error) { console.error(error) }
+    } catch (error) {}
   }
 }
 

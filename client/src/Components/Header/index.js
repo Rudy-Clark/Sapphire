@@ -1,17 +1,16 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-// import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import PropTypes from 'prop-types';
 
 import Diamond from './diamond.svg';
-// import FormButtons from '../../Containers/Buttons';
+import StatusUser from '../../Containers/StatusUser';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -65,12 +64,7 @@ function Header(props) {
             >
               Sapphire
             </Typography>
-            <Link className={classes.link} to="/signIn">
-              <Button className={classes.button}>Войти</Button>
-            </Link>
-            <Link className={classes.link} to="/signUp">
-              <Button className={classes.button}>Регистрация</Button>
-            </Link>
+            <StatusUser />
           </Toolbar>
         </Container>
       </AppBar>
