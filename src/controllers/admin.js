@@ -18,7 +18,9 @@ router.use(async (ctx, next) =>
 
 router.get('/users', async ctx => {
   try {
-    const users = await Users.query().where('admin', false);
+    const users = await Users.query()
+      .where('admin', false)
+      .eager('posts');
     ctx.status = 200;
     ctx.body = {
       status: 'success',
