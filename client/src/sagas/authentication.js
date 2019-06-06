@@ -34,6 +34,11 @@ function* checkSignUp(data) {
   try {
     yield put({ type: FORM_REQUEST });
     const resp = yield call(request.post, '/auth/reg', data);
+    console.log(resp);
+    const localStorage = yield setLocalStorage(resp);
+    yield put(addUser(localStorage));
+    yield put({ type: RESET_ERRORS });
+    yield put({ type: FORM_REQUEST_END });
   } catch (error) {
     yield put(setRegError(error.errorMsg));
     yield put({ type: FORM_REQUEST_END });
