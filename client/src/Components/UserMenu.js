@@ -34,6 +34,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const renderLink = (user, classes) => (
+  <Link className={classes.link} component={LinkRouter} to={`/${user.role}/`}>
+    {user.role === 'admin' ? 'Dashboard' : 'Posts'}
+  </Link>
+);
+
 function UserMenu({ user, handleLogout }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -65,15 +71,7 @@ function UserMenu({ user, handleLogout }) {
         >
           <List onClick={handleClose}>
             <Divider />
-            <ListItem button>
-              <Link
-                className={classes.link}
-                component={LinkRouter}
-                to={`/${user.role}/`}
-              >
-                Posts
-              </Link>
-            </ListItem>
+            <ListItem button>{renderLink(user, classes)}</ListItem>
             <Divider />
             <ListItem button onClick={handleLogout}>
               <ListItemText>Выйти</ListItemText>
