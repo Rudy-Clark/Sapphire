@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
 import { take, put, call, fork, all, takeLatest } from 'redux-saga/effects';
-// import { isEmpty } from 'lodash';
+import { push } from 'connected-react-router';
 
 import {
   SIGN_IN,
@@ -23,6 +23,7 @@ function* checkSignIn(data) {
     const localStorage = yield setLocalStorage(resp);
     yield put(addUser(localStorage));
     yield put({ type: RESET_ERRORS });
+    yield put(push(`/${localStorage.role}/`));
     yield put({ type: FORM_REQUEST_END });
   } catch (error) {
     yield put(setLoginError({ msg: error.msg }));
@@ -38,6 +39,7 @@ function* checkSignUp(data) {
     const localStorage = yield setLocalStorage(resp);
     yield put(addUser(localStorage));
     yield put({ type: RESET_ERRORS });
+    yield put(push(`/${localStorage.role}/`));
     yield put({ type: FORM_REQUEST_END });
   } catch (error) {
     yield put(setRegError(error.errorMsg));
