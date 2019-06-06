@@ -44,7 +44,7 @@ function UserMenu({ user, handleLogout }) {
 
   return (
     <Fragment>
-      <Typography variant="h5" component="h1">
+      <Typography variant="h5" component="h5">
         {user.name}
       </Typography>
       <IconButton
