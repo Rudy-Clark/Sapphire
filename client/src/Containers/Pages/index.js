@@ -10,6 +10,7 @@ import SignIn from './SignIn';
 import Post from './Post';
 import NotFound from './NotFound';
 import User from './User';
+import Admin from './Admin';
 import ProtectedRoute from '../ProtectedRoute';
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +28,8 @@ function Pages() {
         <Route path="/signUp" component={SignUp} />
         <Route path="/signIn" component={SignIn} />
         <Route path="/posts/:id" component={Post} />
-        <ProtectedRoute path="/user/posts" role="user" component={User} />
+        <ProtectedRoute path="/user/" role="user" component={User} />
+        <ProtectedRoute path="/admin/" role="admin" component={Admin} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

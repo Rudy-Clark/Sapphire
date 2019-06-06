@@ -69,7 +69,7 @@ function UserMenu({ user, handleLogout }) {
               <Link
                 className={classes.link}
                 component={LinkRouter}
-                to="/user/posts"
+                to={`/${user.role}/`}
               >
                 Posts
               </Link>
