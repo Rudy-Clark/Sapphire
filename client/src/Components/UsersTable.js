@@ -36,7 +36,7 @@ function UsersTable({ children }) {
   );
 }
 UsersTable.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.array,
 };
 
 export default UsersTable;

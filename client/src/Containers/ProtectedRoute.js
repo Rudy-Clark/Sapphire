@@ -21,7 +21,7 @@ const ProtectedRoute = ({
 };
 ProtectedRoute.propTypes = {
   user: PropTypes.object,
-  component: PropTypes.func,
+  component: PropTypes.object || PropTypes.func,
   back: PropTypes.func,
   role: PropTypes.string.isRequired,
 };
