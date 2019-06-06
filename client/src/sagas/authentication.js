@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-condition */
-import { take, put, call, fork, all } from 'redux-saga/effects';
+import { take, put, call, fork, all, takeLatest } from 'redux-saga/effects';
 // import { isEmpty } from 'lodash';
 
 import {
@@ -9,16 +9,18 @@ import {
   FORM_REQUEST,
   FORM_REQUEST_END,
   RESET_ERRORS,
+  REQUEST,
+  REQUEST_SUCCESS,
 } from '../actions/constants';
-import { setLoginError, setRegError, addUser } from '../actions';
-import { setLocalStorage } from '../api/local-storage';
+import { setLoginError, setRegError, addUser, delUser } from '../actions';
+import { setLocalStorage, clearLocalStorage } from '../api/local-storage';
 import { request } from '../api/request';
 
 function* checkSignIn(data) {
   try {
     yield put({ type: FORM_REQUEST });
-    const res = yield call(request.post, '/auth/login', data);
-    const localStorage = yield setLocalStorage(res);
+    const resp = yield call(request.post, '/auth/login', data);
+    const localStorage = yield setLocalStorage(resp);
     yield put(addUser(localStorage));
     yield put({ type: RESET_ERRORS });
     yield put({ type: FORM_REQUEST_END });
@@ -40,10 +42,8 @@ function* checkSignUp(data) {
 
 function* watchSignIn() {
   while (true) {
-    try {
-      const { data } = yield take(SIGN_IN);
-      yield fork(checkSignIn, data);
-    } catch (error) {}
+    const { data } = yield take(SIGN_IN);
+    yield fork(checkSignIn, data);
   }
 }
 
@@ -54,10 +54,22 @@ function* watchSignUp() {
   }
 }
 
-function* watchLogout() {
-  while (true) {
-    yield take(LOGOUT);
+function* logout() {
+  yield put({ type: REQUEST });
+  try {
+    const resp = yield call(request.get, '/auth/status');
+    if (resp.status === 'success') {
+      yield clearLocalStorage();
+      yield put(delUser());
+      yield put({ type: REQUEST_SUCCESS });
+    }
+  } catch (error) {
+    console.error(error);
   }
+}
+
+function* watchLogout() {
+  yield takeLatest(LOGOUT, logout);
 }
 
 export default function* watchAuth() {

@@ -74,8 +74,8 @@ function UserMenu({ user, handleLogout }) {
               </Link>
             </ListItem>
             <Divider />
-            <ListItem button>
-              <ListItemText onClick={handleLogout}>Выйти</ListItemText>
+            <ListItem button onClick={handleLogout}>
+              <ListItemText>Выйти</ListItemText>
             </ListItem>
           </List>
         </Menu>

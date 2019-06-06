@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
+import { LOGOUT } from '../actions/constants';
 import UserMenu from '../Components/UserMenu';
 
 const useStyles = makeStyles(() => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const StatusUser = ({ user }) => {
+const StatusUser = ({ user, logout }) => {
   const classes = useStyles();
   if (isEmpty(user.name)) {
     return (
@@ -32,12 +33,20 @@ const StatusUser = ({ user }) => {
       </Fragment>
     );
   }
-  return <UserMenu user={user} handleLogout={() => {}} />;
+  return <UserMenu user={user} handleLogout={logout} />;
 };
 StatusUser.propTypes = {
   user: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ user: state.user });
 
-export default connect(mapStateToProps)(StatusUser);
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch({ type: LOGOUT }),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(StatusUser);
