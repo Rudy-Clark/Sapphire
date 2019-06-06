@@ -8,16 +8,20 @@ import {
   LOGOUT,
   FORM_REQUEST,
   FORM_REQUEST_END,
+  RESET_ERRORS,
 } from '../actions/constants';
-import { setLoginError, setRegError } from '../actions';
+import { setLoginError, setRegError, addUser } from '../actions';
+import { setLocalStorage } from '../api/local-storage';
 import { request } from '../api/request';
 
 function* checkSignIn(data) {
   try {
     yield put({ type: FORM_REQUEST });
-    const res = yield call(request.post, '/auth/login', data, {
-      errorHandle: false,
-    });
+    const res = yield call(request.post, '/auth/login', data);
+    const localStorage = yield setLocalStorage(res);
+    yield put(addUser(localStorage));
+    yield put({ type: RESET_ERRORS });
+    yield put({ type: FORM_REQUEST_END });
   } catch (error) {
     yield put(setLoginError({ msg: error.msg }));
     yield put({ type: FORM_REQUEST_END });

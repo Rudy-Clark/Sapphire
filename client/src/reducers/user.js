@@ -13,7 +13,7 @@ const user = (state = initialState, action) => {
     case ADD_USER:
       return { ...action.payload };
     case DEL_USER:
-      return { name: '', role: '' };
+      return { name: '', role: '', token: '' };
     default:
       return state;
   }

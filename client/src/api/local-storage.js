@@ -20,11 +20,10 @@ export const setLocalStorage = data =>
     return object;
   }, {});
 
-export const getLocalStorage = () => {
-  return keys.reduce((object, key) => {
+export const getLocalStorage = () =>
+  keys.reduce((object, key) => {
     if (!isEmpty(getItem(key))) object[key] = getItem(key);
     return object;
   }, {});
-};
 
 export const clearLocalStorage = () => keys.forEach(key => removeItem(key));

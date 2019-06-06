@@ -4,7 +4,7 @@ import { getItem } from './local-storage';
 
 export const request = axios.create({
   headers: {
-    Authorization: `Bearer ${getItem('token')}`,
+    Authorization: getItem('token'),
   },
   errorHandle: false,
 });
