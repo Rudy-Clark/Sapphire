@@ -21,7 +21,6 @@ export const setLocalStorage = data =>
   }, {});
 
 export const getLocalStorage = () => {
-  if (isEmpty(keys)) return null;
   return keys.reduce((object, key) => {
     if (!isEmpty(getItem(key))) object[key] = getItem(key);
     return object;

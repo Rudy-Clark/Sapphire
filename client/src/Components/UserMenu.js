@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function UserMenu({ user }) {
+function UserMenu({ user, handleLogout }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const userIconRef = useRef(null);
@@ -44,7 +44,7 @@ function UserMenu({ user }) {
   return (
     <Fragment>
       <IconButton
-        aria-label="More"
+        aria-label="menu"
         aria-controls="user-menu"
         aria-haspopup="true"
         onClick={handleClick}
@@ -59,7 +59,7 @@ function UserMenu({ user }) {
           open={open}
           onClose={handleClose}
         >
-          <List>
+          <List onClick={handleClose}>
             <ListItem disabled>
               <ListItemText>{user.name}</ListItemText>
             </ListItem>
@@ -75,7 +75,7 @@ function UserMenu({ user }) {
             </ListItem>
             <Divider />
             <ListItem button>
-              <ListItemText>Выйти</ListItemText>
+              <ListItemText onClick={handleLogout}>Выйти</ListItemText>
             </ListItem>
           </List>
         </Menu>
@@ -85,6 +85,7 @@ function UserMenu({ user }) {
 }
 UserMenu.propTypes = {
   user: PropTypes.object,
+  handleLogout: PropTypes.func,
 };
 
 export default UserMenu;

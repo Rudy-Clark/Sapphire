@@ -20,19 +20,19 @@ const useStyles = makeStyles(() => ({
 
 const StatusUser = ({ user }) => {
   const classes = useStyles();
-  // if (isEmpty(user.name)) {
-  //   return (
-  //     <Fragment>
-  //       <Link className={classes.link} to="/signIn">
-  //         <Button className={classes.button}>Войти</Button>
-  //       </Link>
-  //       <Link className={classes.link} to="/signUp">
-  //         <Button className={classes.button}>Регистрация</Button>
-  //       </Link>
-  //     </Fragment>
-  //   );
-  // }
-  return <UserMenu user={user} />;
+  if (isEmpty(user.name)) {
+    return (
+      <Fragment>
+        <Link className={classes.link} to="/signIn">
+          <Button className={classes.button}>Войти</Button>
+        </Link>
+        <Link className={classes.link} to="/signUp">
+          <Button className={classes.button}>Регистрация</Button>
+        </Link>
+      </Fragment>
+    );
+  }
+  return <UserMenu user={user} handleLogout={() => {}} />;
 };
 StatusUser.propTypes = {
   user: PropTypes.object.isRequired,
