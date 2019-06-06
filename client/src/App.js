@@ -9,8 +9,7 @@ import Pages from './Containers/Pages';
 import Preloader from './Containers/Preloader';
 import rootSaga from './sagas';
 
-export const store = configureStore();
-console.log(store.getState());
+const store = configureStore();
 sagaMiddleware.run(rootSaga);
 
 function App() {

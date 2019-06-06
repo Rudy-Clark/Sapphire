@@ -31,7 +31,7 @@ export default class Users extends Model {
       required: ['username', 'email', 'password'],
       properties: {
         id: { type: 'integer' },
-        username: { type: 'string', minLength: 4, maxLength: 100 },
+        username: { type: 'string', minLength: 3, maxLength: 100 },
         password: { type: 'string', minLength: 3, maxLength: 100 },
         email: { type: 'string', format: 'email' },
       },

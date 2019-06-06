@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import { Link as LinkRouter } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
@@ -43,6 +44,9 @@ function UserMenu({ user, handleLogout }) {
 
   return (
     <Fragment>
+      <Typography variant="h5" component="h1">
+        {user.name}
+      </Typography>
       <IconButton
         aria-label="menu"
         aria-controls="user-menu"
@@ -60,9 +64,6 @@ function UserMenu({ user, handleLogout }) {
           onClose={handleClose}
         >
           <List onClick={handleClose}>
-            <ListItem disabled>
-              <ListItemText>{user.name}</ListItemText>
-            </ListItem>
             <Divider />
             <ListItem button>
               <Link
