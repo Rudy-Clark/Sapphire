@@ -6,6 +6,7 @@ import Users from '../models/Users';
 const router = new Router({ prefix: '/admin' });
 
 router.use(async (ctx, next) =>
+  // eslint-disable-next-line consistent-return
   passport.authenticate('jwt', (err, user) => {
     if (!user.admin) {
       ctx.throw(403, 'Access denied');

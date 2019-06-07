@@ -1,7 +1,7 @@
+/* eslint-disable import/no-cycle */
 import { Model } from 'objection';
 
 import connection from '../db/connection';
-// eslint-disable-next-line import/no-cycle
 import Users from './Users';
 import Images from './Images';
 import Videos from './Videos';

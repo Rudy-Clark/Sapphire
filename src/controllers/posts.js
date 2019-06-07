@@ -40,7 +40,6 @@ router.get('/:id', async ctx => {
       ctx.body = { status: 'success', post };
     }
   } catch (error) {
-    console.log(error);
     ctx.status = 500;
     ctx.body = { status: 'error', msg: error };
   }

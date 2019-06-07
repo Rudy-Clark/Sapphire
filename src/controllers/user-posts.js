@@ -21,6 +21,7 @@ router.get('/posts', async ctx => {
     const { user } = ctx.state;
     if (isEmpty(user)) throw new Error('Unauthenticated');
     const posts = await Posts.query()
+      .eager('image')
       .select('id', 'title', 'content', 'created_at', 'updated_at')
       .where('author_id', user.id);
     ctx.body = { status: 'success', posts };
@@ -36,6 +37,7 @@ router.get('/posts/:id', async ctx => {
     const { user } = ctx.state;
     if (isEmpty(user)) throw new Error('Unauthenticated');
     const post = await Posts.query()
+      .eager('[image, video]')
       .select('id', 'title', 'content', 'created_at', 'updated_at')
       .where('author_id', user.id)
       .where('id', id)

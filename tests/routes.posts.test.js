@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import { server } from '../src/app';
 import knex from '../src/db/connection';
 
-describe.only('routes : posts', () => {
+describe('routes : posts', () => {
   before(() => server.listen(1337));
   after(() => server.close());
 
