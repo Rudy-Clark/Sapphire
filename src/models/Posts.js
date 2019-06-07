@@ -36,7 +36,7 @@ export default class Posts extends Model {
         modelClass: Videos,
         join: {
           from: 'posts.id',
-          to: 'video.post_id',
+          to: 'videos.post_id',
         },
       },
     };

@@ -7,8 +7,9 @@ router.get('/', async ctx => {
   try {
     const posts = await Posts.query()
       .select('id', 'title', 'content', 'created_at', 'updated_at')
-      .eager('[user(selectName)]', {
+      .eager('[user(selectName), image(selectXs)]', {
         selectName: builder => builder.select('username'),
+        selectXs: builder => builder.select('xs'),
       });
     ctx.body = { status: 'success', posts };
   } catch (error) {
@@ -21,8 +22,10 @@ router.get('/:id', async ctx => {
   try {
     const { id } = ctx.params;
     const post = await Posts.query()
-      .eager('[user(selectName)]', {
+      .eager('[user(selectName), image(selectImg), video(selectVid)]', {
         selectName: builder => builder.select('username'),
+        selectImg: builder => builder.select('md', 'lg'),
+        selectVid: builder => builder.select('uid'),
       })
       .select('id', 'title', 'content', 'created_at', 'updated_at')
       .findById(id);
@@ -37,6 +40,7 @@ router.get('/:id', async ctx => {
       ctx.body = { status: 'success', post };
     }
   } catch (error) {
+    console.log(error);
     ctx.status = 500;
     ctx.body = { status: 'error', msg: error };
   }

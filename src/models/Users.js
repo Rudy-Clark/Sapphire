@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { isEmpty } from 'lodash';
 
 import connection from '../db/connection';
+// eslint-disable-next-line import/no-cycle
 import Posts from './Posts';
 
 Model.knex(connection);
