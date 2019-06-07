@@ -95,4 +95,20 @@ exports.seed = knex =>
           lg: 'corundumLG.png',
         },
       ]),
+    )
+    .then(() =>
+      knex('videos').insert([
+        {
+          post_id: 1,
+          uid: 'yXD6tFqcP8U',
+        },
+        {
+          post_id: 2,
+          uid: 'yXD6tFqcP8U',
+        },
+        {
+          post_id: 3,
+          uid: 'yXD6tFqcP8U',
+        },
+      ]),
     );
