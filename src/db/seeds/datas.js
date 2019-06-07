@@ -73,4 +73,26 @@ exports.seed = knex =>
         subtitle: `Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.`,
         wallpaper: '/images/wallpaper.jpg',
       }),
+    )
+    .then(() =>
+      knex('images').insert([
+        {
+          post_id: 1,
+          xs: 'diamondsXS.png',
+          md: 'diamondsMD.png',
+          lg: 'diamondsLG.png',
+        },
+        {
+          post_id: 2,
+          xs: 'hrizolitXS.png',
+          md: 'hrizolitMD.png',
+          lg: 'hrizolitLG.png',
+        },
+        {
+          post_id: 3,
+          xs: 'corundumXS.png',
+          md: 'corundumMD.png',
+          lg: 'corundumLG.png',
+        },
+      ]),
     );
