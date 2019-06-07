@@ -17,11 +17,11 @@ exports.up = knex =>
       .string('md')
       .notNullable()
       .unique();
-      
+
     table
       .foreign('post_id')
       .references('id')
       .inTable('posts');
   });
 
-exports.down = knex => knex.schema.dropTable('posts');
+exports.down = knex => knex.schema.dropTable('images');
