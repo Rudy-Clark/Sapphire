@@ -5,10 +5,7 @@ exports.up = knex =>
       .integer('post_id')
       .unsigned()
       .notNullable();
-    table
-      .string('uid')
-      .notNullable()
-      .unique();
+    table.string('uid').notNullable();
     table
       .foreign('post_id')
       .references('id')
