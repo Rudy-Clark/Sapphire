@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Post({ id, title, content, user }) {
+function Post({ id, title, content, user, image }) {
   const classes = useStyles();
   return (
     <CardActionArea component={Link} to={`/posts/${id}`}>
@@ -45,7 +45,7 @@ function Post({ id, title, content, user }) {
         <Hidden xsDown>
           <CardMedia
             className={classes.cardMedia}
-            image="/images/wallpaper.jpg"
+            image={`/images/${image.xs}`}
             title="Image title"
           />
         </Hidden>
@@ -59,6 +59,7 @@ Post.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
   user: PropTypes.object,
+  image: PropTypes.object,
 };
 
 export default Post;
