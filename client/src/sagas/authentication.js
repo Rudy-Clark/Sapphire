@@ -14,7 +14,7 @@ import {
 } from '../actions/constants';
 import { setLoginError, setRegError, addUser, delUser } from '../actions';
 import { setLocalStorage, clearLocalStorage } from '../api/local-storage';
-import { request } from '../api/request';
+import request from '../api/request';
 
 function* checkSignIn(data) {
   try {

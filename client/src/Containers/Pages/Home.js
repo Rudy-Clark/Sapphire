@@ -42,7 +42,7 @@ function Home({ load, push, endLoad }) {
       />
       <Grid container spacing={4}>
         {!page.posts.length
-          ? 'Нет сататьей'
+          ? 'Нет статей'
           : page.posts.map(post => (
               <Grid item key={post.title} xs={12} md={6}>
                 <PostCard {...post} />

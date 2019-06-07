@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import UsersTable from '../../Components/UsersTable';
-import { request } from '../../api/request';
+import request from '../../api/request';
 import PostCard from '../../Components/PostCard';
 import { REQUEST, REQUEST_SUCCESS } from '../../actions/constants';
 
@@ -25,12 +25,18 @@ function Admin({ load, endLoad }) {
 
   useEffect(() => {
     const fetch = async () => {
-      load();
-      const respUsers = await request.get('/admin/users');
-      const respPosts = await request.get('/posts');
-      setUsers(respUsers.users);
-      setPosts(respPosts.posts);
-      endLoad();
+      try {
+        load();
+        const respUsers = await request.get('/admin/users');
+        const respPosts = await request.get('/posts');
+        setUsers(respUsers.users);
+        setPosts(respPosts.posts);
+        endLoad();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        endLoad();
+      }
     };
     fetch();
     return () => {
@@ -80,7 +86,7 @@ function Admin({ load, endLoad }) {
 Admin.propTypes = {
   load: PropTypes.func,
   endLoad: PropTypes.func,
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   load: () => dispatch({ type: REQUEST }),
