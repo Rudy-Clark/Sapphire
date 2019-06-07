@@ -70,10 +70,6 @@ function Post({ match, push, load, endLoad }) {
     return () => setPost(initialState);
   }, []);
 
-  const handleReady = e => {
-    e.target.pauseVideo();
-  };
-
   return (
     <Container className={classes.root} component="main" maxWidth="md">
       <Wallpaper title={post.title} url={post.url} />
@@ -90,7 +86,6 @@ function Post({ match, push, load, endLoad }) {
           height: '390',
           width: '100%',
         }}
-        // onReady={handleReady}
       />
     </Container>
   );
