@@ -12,7 +12,10 @@
     "server:build:min": "rimraf ./build && babel src --out-dir build --presets minify",
     "serve": "npm run server:build && node build/app.js",
     "server:test": "cross-env NODE_ENV=test mocha --require @babel/register 'tests/**/*.test.js'",
-    "setup": "yarn install && cd client/ && yarn install"
+    "setup": "yarn install && cd client/ && yarn install",
+    "migrate": "knex migrate:latest --env development",
+    "seed": "knex seed:run --env development",
+    "rollback": "knex migrate:rollback"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
