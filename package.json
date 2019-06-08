@@ -11,7 +11,8 @@
     "server:build": "rimraf ./build && babel src --out-dir build",
     "server:build:min": "rimraf ./build && babel src --out-dir build --presets minify",
     "serve": "npm run server:build && node build/app.js",
-    "server:test": "cross-env NODE_ENV=test mocha --require @babel/register 'tests/**/*.test.js'"
+    "server:test": "cross-env NODE_ENV=test mocha --require @babel/register 'tests/**/*.test.js'",
+    "setup": "yarn install && cd client/ && yarn install"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
